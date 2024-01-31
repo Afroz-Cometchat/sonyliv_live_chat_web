@@ -3,13 +3,41 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { CometChatUIKit, UIKitSettingsBuilder } from '@cometchat/chat-uikit-react';
+import COMETCHAT_CONSTANTS from './CONSTS';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+
+(() => {
+  const UIKitSettings = new UIKitSettingsBuilder()
+    .setAppId(COMETCHAT_CONSTANTS.APP_ID)
+    .setRegion(COMETCHAT_CONSTANTS.REGION)
+    .setAuthKey(COMETCHAT_CONSTANTS.AUTH_KEY)
+    .subscribePresenceForFriends()
+    .build();
+  //Initialize CometChat UIKit
+  CometChatUIKit.init(UIKitSettings).then(() => {
+    console.log("Initialization completed successfully");
+    // You can now call login function.
+    CometChatUIKit.getLoggedinUser().then(user => {
+      if(!user){
+        //Login user
+        CometChatUIKit.loginWithAuthToken("christinerussell_1702646131794d006c4a8906447168f6fdbcb57c").then(user => {        
+          console.log("Login Successful:", { user });
+          //mount your app        
+        }).catch(console.log);
+      } else {
+        //mount your app
+      }
+    }).catch(console.log);
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+        <App />
+    );
+  }).catch(console.log);
+})()
+
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

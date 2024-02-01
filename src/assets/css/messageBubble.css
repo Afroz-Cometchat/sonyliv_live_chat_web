@@ -1,0 +1,89 @@
+.messageBubbleMainContainer * {
+    margin: 0;
+    padding: 0;
+}
+
+.messageBubbleMainContainer {
+    width: 27vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bubbleContentConatainer {
+    margin-left: 10px;
+    width: 100%;
+}
+
+.bubbleTextContainer {
+    background-color: rgb(44, 44, 44);
+    font-size: 12px;
+    padding: 8px;
+    border-radius: 6px;
+    color: #ececec;
+    line-height: 15px;
+
+}
+
+.bubbleSenderName{
+    font-weight: bold;
+    color: #fff;
+}
+
+.groupAvatarContainer {
+    width: 30px;
+    height: 30px;
+}
+
+.groupAvatarContainer img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.bubbleBottomView{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.bubbleActionsContainer{
+    width: 25%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.addReaction{
+    font-size: 20px;
+    position: relative;
+}
+
+.reactionEmojiContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.reactionsEmojis{
+    /* border: 1px solid red; */
+}
+
+.reactionsEmojis span {
+    /* margin: 0 1px 0 0; */
+    /* margin-right: -10px;  */
+    /* position: relative; */
+    /* z-index: 1; */
+    letter-spacing: -4px;
+}
+
+.cursorPointer{
+    cursor: pointer;
+}
+
+.reactionsCount{
+    margin-left: 6px;
+    font-size: 14px;
+}

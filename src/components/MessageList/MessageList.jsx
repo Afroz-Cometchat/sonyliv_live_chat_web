@@ -1,4 +1,4 @@
-import { CometChatMessageOption, CometChatMessageTemplate, CometChatMessages, CometChatUIKit, MessageListConfiguration, MessagesStyle, ThreadedMessagesConfiguration } from "@cometchat/chat-uikit-react";
+import { CometChatMessageOption, CometChatMessageTemplate, CometChatMessages, CometChatUIKit, DateStyle, MessageListConfiguration, MessagesStyle, ThreadedMessagesConfiguration } from "@cometchat/chat-uikit-react";
 import '../../assets/css/messageList.css'
 import backbutton from '../../assets/images/backbutton.png'
 import sendbutton from '../../assets/images/sendbutton.png'
@@ -8,9 +8,28 @@ import MessageBubble from "../MessageBubble/MessageBubble";
 
 function MessageList(props) {
     // handle textMessage state
+    console.log("propsss", props);
     const [textMessage, setTextMessage] = useState('');
     // handle customMessageTheme state
     const [customMessageTheme, setCustomMessageTheme] = useState([]);
+
+    // messagesRequestBuilder
+    let messagesRequestBuilder = new CometChat.MessagesRequestBuilder().setGUID(props.joinedGroup.guid).setCategories(['message']).setTypes(['text']).hideReplies(true).setLimit(30)
+
+    // messageListConfiguration
+    let messageListConfiguration = new MessageListConfiguration({
+        alignment: 0,
+        sentIcon: null,
+        deliveredIcon: null,
+        readIcon: null,
+        waitIcon: null, datePattern: null,
+        templates: customMessageTheme,
+        showAvatar: false,
+        messagesRequestBuilder,
+        DateSeparatorPattern: null,
+        dateSeparatorStyle: null
+    })
+
 
     // render custom message bubble
     const getBubbleView = (message) => {
@@ -31,9 +50,9 @@ function MessageList(props) {
 
     // threaded messages custom configuration
     const getThreadMessageCustomBubbleView = (message) => {
-        console.log("bubble",message);
+        console.log("bubble", message);
         return (
-            <p style={{color: "black"}}>custom bubble</p>
+            <p style={{ color: "black" }}>custom bubble</p>
         )
     }
     const threadedMessagesConfiguration = new ThreadedMessagesConfiguration({
@@ -59,7 +78,7 @@ function MessageList(props) {
                     headerView: () => <></>,
                     options: () => []
                 })
-            }else {
+            } else {
                 // console.log("my message", message);
                 return message
             }
@@ -95,11 +114,15 @@ function MessageList(props) {
             <div className="messageList">
                 <CometChatMessages
                     group={props.joinedGroup}
-                    hideMessageComposer={true} hideMessageHeader={true} messageListConfiguration={new MessageListConfiguration({ alignment: 0, sentIcon: null, deliveredIcon: null, readIcon: null, waitIcon: null, datePattern: null, templates: customMessageTheme, showAvatar: false })} messagesStyle={new MessagesStyle({ background: "rgb(27, 27, 27)" })} threadedMessagesConfiguration={threadedMessagesConfiguration} />
+                    hideMessageComposer={true}
+                    hideMessageHeader={true}
+                    messageListConfiguration={messageListConfiguration}
+                    messagesStyle={new MessagesStyle({ background: "rgb(27, 27, 27)" })} threadedMessagesConfiguration={threadedMessagesConfiguration} />
             </div>
             <div className="messageListComposerContainer">
                 <form onSubmit={(e) => sendTextMessage(e)}>
                     <div className="messageListComposer">
+
                         <div className="messageListComposerInputContainer">
                             <span className="laughEmoji">&#128541;</span>
                             <input type="text" placeholder="Add a comment" value={textMessage} onChange={(e) => setTextMessage(e.target.value)} />

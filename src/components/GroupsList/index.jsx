@@ -2,16 +2,16 @@ import { useState } from 'react';
 import './style.css'
 import { CometChatGroups, GroupsStyle } from '@cometchat/chat-uikit-react';
 import { CometChat } from '@cometchat/chat-sdk-javascript';
-import MessageList from '../MessageList/MessageList';
-import { customGroupListView } from '../views';
+import MessageList from '../MessageList/index';
 import solylivhearticon from '../../assets/images/solylivhearticon.png'
+import ListItemView from './Views/ListItemView';
 
 function GroupsList(props) {
     const [joinedGroup, setJoinedGroup] = useState(null);
 
     // set custom group list view
     const listItemView = (group) => {
-        return customGroupListView({ group, joinGroupHandler })
+        return ListItemView({ group, joinGroupHandler })
     }
 
     // handle join group click 

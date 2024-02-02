@@ -1,4 +1,4 @@
-const customGroupListView = ({ group, joinGroupHandler }) => {
+const ListItemView = ({ group, joinGroupHandler }) => {
     return (
         <div className="groupListItem" style={{
             width: `${Math.floor(Math.random() * 21) + 60}%`
@@ -21,4 +21,4 @@ const customGroupListView = ({ group, joinGroupHandler }) => {
 }
 
 
-export { customGroupListView };
+export default ListItemView;

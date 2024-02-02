@@ -4,11 +4,11 @@ import { CometChat } from '@cometchat/chat-sdk-javascript';
 import rightArrow from '../../assets/images/rightArrow.png'
 import flagUser from '../../assets/images/flagUser.png'
 import reportCross from '../../assets/images/reportCross.png'
-import ThreadMessageList from '../MessageList/ThreadMessageList';
+import ThreadMessageList from '../ThreadMessageList/index';
 import { CometChatUIKit } from '@cometchat/chat-uikit-react';
+import { MessageBubbleReactionsView } from './Views';
 
-function MessageBubble({ message, group }) {
-    // console.log(message);
+function MessageBubble({ message, group, setParentMessageIdHandler }) {
     const [showReactionsOptions, setShowReactionsOptions] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [isActionsView, setIsActionsView] = useState(false);
@@ -29,9 +29,7 @@ function MessageBubble({ message, group }) {
             msgId: message.id,
             emoji: reaction
         }).then(response => {
-            // Reaction added successfully
             toggleReactionsOptions()
-            // tempp()
         }).catch(error => {
             // Some error occured
         });
@@ -59,8 +57,8 @@ function MessageBubble({ message, group }) {
 
     // show threaded messages
     const showViewMessages = () => {
-        setShowViewReply(false);
         setShowThreadedMessages(true);
+        setShowViewReply(false);
     }
     // hide threaded messages
     const hideThreadMessages = () => {
@@ -68,56 +66,14 @@ function MessageBubble({ message, group }) {
         setShowThreadedMessages(false)
     }
 
-    function tempp() {
-        // console.log("#############################################################################################", loggedInUser.name);
-        CometChatUIKit.getLoggedinUser().then((user) => {
-            console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", user);
-            if (message.metadata?.['@injected']?.extensions?.reactions) {
-                let reactionsDataTemp = Object.keys(message.metadata['@injected'].extensions.reactions)
-                let count = 0
-                for (let k in message.metadata?.['@injected']?.extensions?.reactions) {
-                    let myCount = Object.keys(message.metadata?.['@injected']?.extensions?.reactions[k]);
-                    count += myCount.length
-                }
-                console.log("_______________________________________________________________________________", count);
-                setReactionsCount(count)
-                setReactionsData(reactionsDataTemp)
-                console.log("***************************8", message.metadata?.['@injected']?.extensions?.reactions);
-                let flag = true;
-                if (reactionsDataTemp.includes('👍')) {
-                    for (let k in message.metadata?.['@injected']?.extensions?.reactions) {
-                        if (k === '👍')
-                            for (let j in message.metadata?.['@injected']?.extensions?.reactions[k]) {
-                                if (j === user.name) {
-                                    setIsLiked(true)
-                                    flag = false
-                                    return;
-                                }
-                            }
-                    }
-                }
-                if (flag) setIsLiked(false)
-            }
-        })
+    // reply on thread
+    const replyOnThread = () => {
+        setParentMessageIdHandler(message, message.sender.name)
     }
 
-
-
     useEffect(() => {
-        tempp()
-        // if (message.metadata?.['@injected']?.extensions?.reactions) {
-        //     let reactionsDataTemp = Object.keys(message.metadata['@injected'].extensions.reactions)
-        //     if (reactionsDataTemp.includes('👍')) setIsLiked(true)
-        //     let count = 0
-        //     for (let k in message.metadata?.['@injected']?.extensions?.reactions) {
-        //         let myCount = Object.keys(message.metadata?.['@injected']?.extensions?.reactions[k]);
-        //         count += myCount.length
-        //     }
-        //     console.log("_______________________________________________________________________________", count);
-        //     setReactionsCount(count)
-        //     setReactionsData(reactionsDataTemp)
-        //     console.log("***************************8", message.metadata?.['@injected']?.extensions?.reactions);
-        // }
+        // tempp()
+        console.log('wrkng')
         if (message.replyCount && message.replyCount > 0) {
             setReplyCount(message.replyCount)
             setShowViewReply(true)
@@ -163,31 +119,23 @@ function MessageBubble({ message, group }) {
                             </div>}
                         </span>
                         <span className="likeMessage cursorPointer" onClick={addReactionLike}>{isLiked ? <span className='likedSpan'>Liked</span> : 'Like'}</span>
-                        <span className="replyMessage cursorPointer">Reply</span>
+                        <span className="replyMessage cursorPointer" onClick={replyOnThread}>Reply</span>
                     </div>
                     <div className="bubbleReactionsCount">
-                        {
-                            reactionsCount > 0 ?
-                                <div className='reactionEmojiContainer'>
-                                    <div className='reactionsEmojis'>
-                                        {reactionsData.map(ele => <span>{ele}</span>)}
-                                    </div>
-                                    <span className='reactionsCount'>{reactionsCount}</span>
-                                </div> : null
-                        }
+                        <MessageBubbleReactionsView message={message} setReactionsCount={setReactionsCount} setReactionsData={setReactionsData} setIsLiked={setIsLiked} reactionsData={reactionsData} reactionsCount={reactionsCount} />
                     </div>
                 </div>
                 {/* bubble thread messages section */}
-                {showViewReply ?
+                {showViewReply &&
                     <div className="threadMessaagesContainer">
                         <span className='viewMessageText' onClick={showViewMessages}> <span className='lineBeforeViewReply'></span> View {replyCount} {replyCount > 1 ? 'Replies' : 'Reply'}</span>
                     </div>
-                    : null
                 }
                 {
                     showThreadedMessages ?
                         <div className="threadedMessagesListContainer">
-                            <ThreadMessageList message={message} group={group} />
+                            {/* <ThreadMessageList message={message} group={group} /> */}
+                            <ThreadMessageList message={message} group={group} setParentMessageIdHandler={setParentMessageIdHandler} />
                             <div className="threadMessaagesContainer">
                                 <span className='viewMessageText' onClick={hideThreadMessages}> <span className='lineBeforeViewReply'></span> Hide {replyCount} {replyCount > 1 ? 'Replies' : 'Reply'}</span>
                             </div>

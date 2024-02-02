@@ -1,11 +1,9 @@
-import { CometChatMessageOption, CometChatMessageTemplate, CometChatMessages, CometChatUIKit, DateStyle, MessageListConfiguration, MessagesStyle, ThreadedMessagesConfiguration } from "@cometchat/chat-uikit-react";
+import { CometChatMessageTemplate, CometChatMessages, CometChatUIKit, DateStyle, MessageListConfiguration, MessagesStyle, ThreadedMessagesConfiguration } from "@cometchat/chat-uikit-react";
 // import '../../assets/css/messageList.css'
-import backbutton from '../../assets/images/backbutton.png'
-import sendbutton from '../../assets/images/sendbutton.png'
 import { useEffect, useState } from "react";
-import { CometChat, MessagesRequestBuilder } from "@cometchat/chat-sdk-javascript";
-import MessageBubble from "../MessageBubble/MessageBubble";
-import '../../assets/css/threadMessageList.css'
+import { CometChat } from "@cometchat/chat-sdk-javascript";
+import MessageBubble from "../MessageBubble/index";
+import './style.css'
 
 function ThreadMessageList(props) {
     // handle textMessage state
@@ -37,7 +35,7 @@ function ThreadMessageList(props) {
         // if(message.text=="5") console.log("reaction bubble", message) 
         console.log("threaded message", message);
         return (
-            <MessageBubble message={message} group={props.group} />
+            <MessageBubble message={message} group={props.group} setParentMessageIdHandler={props.setParentMessageIdHandler} />
         )
     }
 
@@ -65,23 +63,7 @@ function ThreadMessageList(props) {
             }
         })
         setCustomMessageTheme(customTemplatesList)
-    }, [])
-
-    // const sendTextMessage = async (e) => {
-    //     e.preventDefault();
-    //     let cometchatTextMessage = new CometChat.TextMessage(
-    //         props.joinedGroup.guid,
-    //         textMessage,
-    //         CometChat.RECEIVER_TYPE.GROUP
-    //     );
-    //     let loggedInUser = await CometChat.getLoggedInUser()
-    //     cometchatTextMessage.setSender(loggedInUser)
-    //     cometchatTextMessage.setSentAt(Math.round(+new Date() / 1000))
-    //     cometchatTextMessage.setMuid(String(Math.round(+new Date() / 1000)))
-    //     CometChatUIKit.sendTextMessage(cometchatTextMessage)
-    //         .then(() => { setTextMessage('') })
-    //         .catch((error) => { console.log(error) })
-    // }
+    }, [props.message])
 
     return (
         <div className="threadMessageList">
@@ -90,7 +72,7 @@ function ThreadMessageList(props) {
                 hideMessageComposer={true}
                 hideMessageHeader={true}
                 messageListConfiguration={messageListConfiguration}
-                messagesStyle={new MessagesStyle({ background: "rgb(27, 27, 27)", width: "100%", padding: "0"})} />
+                messagesStyle={new MessagesStyle({ background: "rgb(27, 27, 27)", width: "100%", padding: "0" })} />
         </div>
     )
 }

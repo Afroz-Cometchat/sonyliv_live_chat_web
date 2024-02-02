@@ -1,5 +1,5 @@
 import { useState } from "react"
-import GroupsList from "../GroupsList/GroupsList";
+import GroupsList from "../GroupsList/index";
 import './style.css'
 
 export default function Home() {

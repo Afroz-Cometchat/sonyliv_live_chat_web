@@ -1,0 +1,15 @@
+.navigation__container {
+    height: 8vh;
+    background-color: rgb(44, 44, 44);
+    color: #fff;
+}
+.navigation__container__nav{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px;
+}
+
+.navigation__container__nav span{
+    margin-left: 30px;
+}

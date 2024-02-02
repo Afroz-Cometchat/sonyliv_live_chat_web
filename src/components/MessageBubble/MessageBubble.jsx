@@ -4,11 +4,15 @@ import { CometChat } from '@cometchat/chat-sdk-javascript';
 import rightArrow from '../../assets/images/rightArrow.png'
 import flagUser from '../../assets/images/flagUser.png'
 import reportCross from '../../assets/images/reportCross.png'
+import ThreadMessageList from '../MessageList/ThreadMessageList';
 
-function MessageBubble({ message }) {
+function MessageBubble({ message, group }) {
     const [showReactionsOptions, setShowReactionsOptions] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [isActionsView, setIsActionsView] = useState(false);
+    const [showViewReply, setShowViewReply] = useState(false);
+    const [showThreadedMessages, setShowThreadedMessages] = useState(false);
+    const [replyCount, setReplyCount] = useState(0);
 
     // render reactions bubble && handle liked button
     const getReactions = () => {
@@ -63,12 +67,26 @@ function MessageBubble({ message }) {
         setIsActionsView(!isActionsView)
     }
 
+    // show threaded messages
+    const showViewMessages = () => {
+        setShowViewReply(false);
+        setShowThreadedMessages(true);
+    }
+    // hide threaded messages
+    const hideThreadMessages = () => {
+        setShowViewReply(true)
+        setShowThreadedMessages(false)
+    }
+
     useEffect(() => {
         if (message.metadata?.['@injected']?.extensions?.reactions) {
             let reactionsData = Object.keys(message.metadata['@injected'].extensions.reactions)
             if (reactionsData.includes('👍')) setIsLiked(true)
         }
-        // if(message.replyCount && message.replyCount > 0){}
+        if (message.replyCount && message.replyCount > 0){
+            setReplyCount(message.replyCount)
+            setShowViewReply(true)
+        } 
     }, [])
 
     return (
@@ -77,6 +95,7 @@ function MessageBubble({ message }) {
                 <img src={message.sender.avatar} alt="" />
             </div>
             <div className="bubbleContentConatainer">
+                {/* bubble text message view */}
                 <div className="bubbleTextContainer">
                     <span> <span className='bubbleSenderName'>{message.sender.name} :</span>  {message.text}</span>
                     <span className='verticalNavDots cursorPointer' onClick={toogleViewActions}>⋮</span>
@@ -93,6 +112,7 @@ function MessageBubble({ message }) {
                         </div>
                     </div>}
                 </div>
+                {/* bubble bottom actions view */}
                 <div className="bubbleBottomView">
                     <div className="bubbleActionsContainer">
                         <span className="addReaction">
@@ -114,6 +134,22 @@ function MessageBubble({ message }) {
                         {getReactions()}
                     </div>
                 </div>
+                {/* bubble thread messages section */}
+                {showViewReply  ?
+                    <div className="threadMessaagesContainer">
+                        <span className='viewMessageText' onClick={showViewMessages}> <span className='lineBeforeViewReply'></span> View {replyCount} {replyCount > 1 ? 'Replies' : 'Reply'}</span>
+                    </div>
+                    : null
+                }
+                {
+                    showThreadedMessages ? 
+                    <div className="threadedMessagesListContainer">
+                        <ThreadMessageList message={message} group={group} />
+                        <div className="threadMessaagesContainer">
+                            <span className='viewMessageText' onClick={hideThreadMessages}> <span className='lineBeforeViewReply'></span> Hide {replyCount} {replyCount > 1 ? 'Replies' : 'Reply'}</span>
+                        </div>
+                    </div>: null
+                }
             </div>
         </div>
     )

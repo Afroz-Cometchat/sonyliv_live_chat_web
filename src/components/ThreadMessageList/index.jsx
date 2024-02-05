@@ -1,4 +1,4 @@
-import { CometChatMessageTemplate, CometChatMessages, CometChatUIKit, DateStyle, MessageListConfiguration, MessagesStyle, ThreadedMessagesConfiguration } from "@cometchat/chat-uikit-react";
+import { CometChatEmojiKeyboard, CometChatMessageTemplate, CometChatMessages, CometChatUIKit, DateStyle, MessageListConfiguration, MessagesStyle, ThreadedMessagesConfiguration } from "@cometchat/chat-uikit-react";
 // import '../../assets/css/messageList.css'
 import { useEffect, useState } from "react";
 import { CometChat } from "@cometchat/chat-sdk-javascript";
@@ -13,6 +13,8 @@ function ThreadMessageList(props) {
 
     // messagesRequestBuilder
     let messagesRequestBuilder = new CometChat.MessagesRequestBuilder().setParentMessageId(props.message.id).setCategories(['message']).setTypes(['text']).hideReplies(true).setLimit(30)
+
+    console.log("$$$$$$$$$$$$$$$$", messagesRequestBuilder);
 
     // messageListConfiguration
     let messageListConfiguration = new MessageListConfiguration({
@@ -35,7 +37,11 @@ function ThreadMessageList(props) {
         // if(message.text=="5") console.log("reaction bubble", message) 
         console.log("threaded message", message);
         return (
-            <MessageBubble message={message} group={props.group} setParentMessageIdHandler={props.setParentMessageIdHandler} />
+            <MessageBubble
+                message={message}
+                group={props.group}
+                setParentMessageIdHandler={props.setParentMessageIdHandler}
+            />
         )
     }
 

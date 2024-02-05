@@ -6,6 +6,9 @@
 .messageListContainer {
     width: 100%;
     height: 80vh;
+    /* border: 1px solid lime; */
+    display: flex;
+    flex-direction: column;
 }
 
 .backButton img {
@@ -35,7 +38,7 @@
 }
 
 .messageListContainer .messageList {
-    height: 64vh;
+    /* max-height: 28%; */
     width: 100%;
 }
 
@@ -47,11 +50,9 @@
 }
 
 .messageListComposerContainer {
-    display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
-    height: 8%;
     border-top: 1px solid rgb(113, 113, 113);
 }
 
@@ -125,4 +126,12 @@
     width: 35px;
     height: 35px;
     object-fit: cover;
+}
+
+.laughEmoji{
+    cursor: pointer;
+}
+
+.emojiKeyboardContainer{
+    padding: 10px 30px;
 }

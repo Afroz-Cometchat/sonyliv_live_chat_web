@@ -12,6 +12,8 @@ function MessageList(props) {
     // handle customMessageTheme state
     const [customMessageTheme, setCustomMessageTheme] = useState([]);
     const [threadParentMessageId, setThreadParentMessageId] = useState(false);
+    const [isEmojiKeyboard, setIsEmojiKeyboard] = useState(false);
+    const [getEmojiKeyboardHeight, emojiKeyboardHeight] = useState('80%')
 
     // messagesRequestBuilder
     let messagesRequestBuilder = new CometChat.MessagesRequestBuilder()
@@ -84,18 +86,23 @@ function MessageList(props) {
         messagesStyle: new MessagesStyle({ background: "rgb(27, 27, 27)" })
     }
 
+    const setEmojiKeyboardHeight = () => {
+        isEmojiKeyboard ? emojiKeyboardHeight('80%') : emojiKeyboardHeight('28%') 
+        setIsEmojiKeyboard(!isEmojiKeyboard)
+    }
+
     return (
         <div className="messageListContainer">
             {/* message list header view */}
             <MessageListHeader {...props} />
 
             {/* messages list view */}
-            <div className="messageList">
+            <div className="messageList" style={{height: getEmojiKeyboardHeight}}>
                 <CometChatMessages {...cometChatMessagesProps} />
             </div>
 
             {/* messagelist composer view */}
-            <MessageListComposer props={props} textMessage={textMessage} setTextMessage={setTextMessage} threadParentMessageId={threadParentMessageId} setParentMessageIdHandler={setParentMessageIdHandler} />
+            <MessageListComposer props={props} textMessage={textMessage} setTextMessage={setTextMessage} threadParentMessageId={threadParentMessageId} setParentMessageIdHandler={setParentMessageIdHandler} setEmojiKeyboardHeight={setEmojiKeyboardHeight} />
         </div>
     )
 }

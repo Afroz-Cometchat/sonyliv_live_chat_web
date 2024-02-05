@@ -16,9 +16,9 @@ function MessageList(props) {
     // messagesRequestBuilder
     let messagesRequestBuilder = new CometChat.MessagesRequestBuilder()
         .setGUID(props.joinedGroup.guid)
-        .setCategories(['message'])
-        .setTypes(['text'])
         .hideReplies(true).setLimit(30)
+        .setCategories(["message"])
+        .setTypes(["text"])
         .hideDeletedMessages(true)
 
     // messageListConfiguration
@@ -47,8 +47,8 @@ function MessageList(props) {
 
     // set thread parenent message id
     const setParentMessageIdHandler = (message, username) => {
-        setThreadParentMessageId(message.parentMessageId? message.parentMessageId : message.id);
-        setTextMessage(username? `@${username}` : '');
+        setThreadParentMessageId(message.parentMessageId ? message.parentMessageId : message.id);
+        setTextMessage(username ? `@${username}` : '');
     }
 
     useEffect(() => {
@@ -68,8 +68,8 @@ function MessageList(props) {
                     options: () => []
                 })
             } else {
-                // console.log("my message", message);
-                return message
+                console.log("###################", message);
+                return message;
             }
         })
         setCustomMessageTheme(customTemplatesList)

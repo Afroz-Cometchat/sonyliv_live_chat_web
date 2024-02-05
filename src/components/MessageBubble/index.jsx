@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import './style.css'
-import { CometChat } from '@cometchat/chat-sdk-javascript';
+import { addCometChatReaction, addCometChatReactionLike } from './controller';
 import rightArrow from '../../assets/images/rightArrow.png'
 import flagUser from '../../assets/images/flagUser.png'
 import reportCross from '../../assets/images/reportCross.png'
 import ThreadMessageList from '../ThreadMessageList/index';
-import { CometChatUIKit } from '@cometchat/chat-uikit-react';
 import { MessageBubbleReactionsView } from './Views';
 
 function MessageBubble({ message, group, setParentMessageIdHandler }) {
@@ -25,29 +24,14 @@ function MessageBubble({ message, group, setParentMessageIdHandler }) {
 
     // add reaction
     const addReaction = (reaction) => {
-        CometChat.callExtension('reactions', 'POST', 'v1/react', {
-            msgId: message.id,
-            emoji: reaction
-        }).then(response => {
-            toggleReactionsOptions()
-        }).catch(error => {
-            // Some error occured
-        });
+        addCometChatReaction(reaction, message.id, toggleReactionsOptions)
     }
 
     // add like reaction
     const addReactionLike = () => {
-        CometChat.callExtension('reactions', 'POST', 'v1/react', {
-            msgId: message.id,
-            emoji: '👍'
-        }).then(response => {
-            // Reaction added successfully
-            if (showReactionsOptions === true) setShowReactionsOptions(false)
-            // setIsLiked(!isLiked)
-            // tempp()
-        }).catch(error => {
-            // Some error occured
-        });
+        addCometChatReactionLike(message.id)
+        if (showReactionsOptions === true) setShowReactionsOptions(false)
+
     }
 
     // toogle view actions view
@@ -72,8 +56,6 @@ function MessageBubble({ message, group, setParentMessageIdHandler }) {
     }
 
     useEffect(() => {
-        // tempp()
-        console.log('wrkng')
         if (message.replyCount && message.replyCount > 0) {
             setReplyCount(message.replyCount)
             setShowViewReply(true)

@@ -1,6 +1,8 @@
 .groupsListContainer {
-    width: 30vw;
-    height: 88vh;
+    width: 30%;
+    /* width: 30vw; */
+    /* height: 88vh; */
+    height: 88%;
     border-radius: 10px;
     position: absolute;
     bottom: 0;

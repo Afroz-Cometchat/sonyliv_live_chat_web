@@ -6,6 +6,8 @@ import flagUser from '../../assets/images/flagUser.png'
 import reportCross from '../../assets/images/reportCross.png'
 import ThreadMessageList from '../ThreadMessageList/index';
 import { MessageBubbleReactionsView } from './Views';
+import sonylivadd from '../../assets/images/sonylivadd.png'
+import { handleFlagUser, handleReportUser } from '../../Controllers';
 
 function MessageBubble({ message, group, setParentMessageIdHandler }) {
     const [showReactionsOptions, setShowReactionsOptions] = useState(false);
@@ -16,7 +18,6 @@ function MessageBubble({ message, group, setParentMessageIdHandler }) {
     const [replyCount, setReplyCount] = useState(0);
     const [reactionsCount, setReactionsCount] = useState(false);
     const [reactionsData, setReactionsData] = useState([]);
-
     // toogle reaction options
     const toggleReactionsOptions = () => {
         setShowReactionsOptions(!showReactionsOptions)
@@ -73,12 +74,12 @@ function MessageBubble({ message, group, setParentMessageIdHandler }) {
                     <span> <span className='bubbleSenderName'>{message.sender.name} :</span>  {message.text}</span>
                     <span className='verticalNavDots cursorPointer' onClick={toogleViewActions}>⋮</span>
                     {isActionsView && <div className="actionsContainer">
-                        <div className="reportUserContainer">
+                        <div className="reportUserContainer" onClick={() => handleReportUser(message.sender.uid)}>
                             <span><img src={reportCross} alt="" className='actionIcons' /></span>
                             <span>Report User</span>
                             <span><img src={rightArrow} alt="" /></span>
                         </div>
-                        <div className="flagUserContainer">
+                        <div className="flagUserContainer" onClick={() => handleFlagUser(message.sender.uid)}>
                             <span><img src={flagUser} alt="" className='actionIcons' /></span>
                             <span>Flag User</span>
                             <span><img src={rightArrow} alt="" /></span>
@@ -112,6 +113,9 @@ function MessageBubble({ message, group, setParentMessageIdHandler }) {
                     <div className="threadMessaagesContainer">
                         <span className='viewMessageText' onClick={showViewMessages}> <span className='lineBeforeViewReply'></span> View {replyCount} {replyCount > 1 ? 'Replies' : 'Reply'}</span>
                     </div>
+                }
+                {
+                    message.id % 3 == 0 ? <img src={sonylivadd} alt="sonyliv add" className='addvertisement' /> : null
                 }
                 {
                     showThreadedMessages ?

@@ -5,6 +5,7 @@ import MessageBubble from "../MessageBubble/index.jsx";
 import './style.css'
 import MessageListHeader from "./Views/MessageListHeader.jsx";
 import MessageListComposer from "./Views/MessageListComposer.jsx";
+import ExtensionPollBubble from "../ExtensionPollBubble/index.jsx";
 
 function MessageList(props) {
     // handle textMessage state
@@ -13,14 +14,14 @@ function MessageList(props) {
     const [customMessageTheme, setCustomMessageTheme] = useState([]);
     const [threadParentMessageId, setThreadParentMessageId] = useState(false);
     const [isEmojiKeyboard, setIsEmojiKeyboard] = useState(false);
-    const [getEmojiKeyboardHeight, emojiKeyboardHeight] = useState('80%')
+    const [getEmojiKeyboardHeight, emojiKeyboardHeight] = useState('81%')
 
     // messagesRequestBuilder
     let messagesRequestBuilder = new CometChat.MessagesRequestBuilder()
         .setGUID(props.joinedGroup.guid)
         .hideReplies(true).setLimit(30)
-        .setCategories(["message"])
-        .setTypes(["text"])
+        .setCategories(["message", "custom"])
+        .setTypes(["text", "extension_poll"])
         .hideDeletedMessages(true)
 
     // messageListConfiguration
@@ -53,6 +54,12 @@ function MessageList(props) {
         setTextMessage(username ? `@${username}` : '');
     }
 
+    const getPollsView = (message) => {
+        return (
+            <ExtensionPollBubble message={message} />
+        )
+    }
+
     useEffect(() => {
         let definedTemplates = CometChatUIKit.getDataSource().getAllMessageTemplates();
         console.log(definedTemplates);
@@ -69,8 +76,18 @@ function MessageList(props) {
                     headerView: () => <></>,
                     options: () => []
                 })
+            } else if (message.category === 'custom' && message.type === "extension_poll") {
+                return new CometChatMessageTemplate({
+                    type: 'extension_poll',
+                    category: 'custom',
+                    contentView: () => <></>,
+                    bottomView: <></>,
+                    bubbleView: (message) => getPollsView(message),
+                    footerView: () => <></>,
+                    headerView: () => <></>,
+                    options: () => []
+                })
             } else {
-                console.log("###################", message);
                 return message;
             }
         })
@@ -87,7 +104,7 @@ function MessageList(props) {
     }
 
     const setEmojiKeyboardHeight = () => {
-        isEmojiKeyboard ? emojiKeyboardHeight('80%') : emojiKeyboardHeight('28%') 
+        isEmojiKeyboard ? emojiKeyboardHeight('81%') : emojiKeyboardHeight('40%')
         setIsEmojiKeyboard(!isEmojiKeyboard)
     }
 
@@ -97,12 +114,12 @@ function MessageList(props) {
             <MessageListHeader {...props} />
 
             {/* messages list view */}
-            <div className="messageList" style={{height: getEmojiKeyboardHeight}}>
+            <div className="messageList" style={{ height: getEmojiKeyboardHeight }}>
                 <CometChatMessages {...cometChatMessagesProps} />
             </div>
 
             {/* messagelist composer view */}
-            <MessageListComposer props={props} textMessage={textMessage} setTextMessage={setTextMessage} threadParentMessageId={threadParentMessageId} setParentMessageIdHandler={setParentMessageIdHandler} setEmojiKeyboardHeight={setEmojiKeyboardHeight} />
+            <MessageListComposer props={props} textMessage={textMessage} setTextMessage={setTextMessage} threadParentMessageId={threadParentMessageId} setParentMessageIdHandler={setParentMessageIdHandler} setEmojiKeyboardHeight={setEmojiKeyboardHeight} setIsEmojiKeyboard={setIsEmojiKeyboard} />
         </div>
     )
 }

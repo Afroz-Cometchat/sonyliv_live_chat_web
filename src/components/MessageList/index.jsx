@@ -1,4 +1,4 @@
-import { CometChatMessageBubble, CometChatMessageTemplate, CometChatMessages, CometChatUIKit, MessageListConfiguration, MessagesStyle } from "@cometchat/chat-uikit-react";
+import { CometChatMessageTemplate, CometChatMessages, CometChatUIKit, MessageListConfiguration, MessagesStyle } from "@cometchat/chat-uikit-react";
 import { useEffect, useState } from "react";
 import { CometChat } from "@cometchat/chat-sdk-javascript";
 import MessageBubble from "../MessageBubble/index.jsx";
@@ -12,9 +12,13 @@ function MessageList(props) {
     const [textMessage, setTextMessage] = useState('');
     // handle customMessageTheme state
     const [customMessageTheme, setCustomMessageTheme] = useState([]);
+    // update parentmessageId to reply in thred
     const [threadParentMessageId, setThreadParentMessageId] = useState(false);
+    // handle to show cometchat emoji keyboard or not
     const [isEmojiKeyboard, setIsEmojiKeyboard] = useState(false);
+    // handle cometchat messagelist height according to the presence of cometchat emoji keyboard
     const [getEmojiKeyboardHeight, emojiKeyboardHeight] = useState('81%')
+    const [trigger, setTrigger] = useState(false);
 
     // messagesRequestBuilder
     let messagesRequestBuilder = new CometChat.MessagesRequestBuilder()
@@ -41,6 +45,7 @@ function MessageList(props) {
 
     // render custom message bubble
     const getBubbleView = (message) => {
+        console.log('parentbubble', message);
         return (
             <>
                 <MessageBubble message={message} group={props.joinedGroup} setParentMessageIdHandler={setParentMessageIdHandler} />
@@ -60,7 +65,8 @@ function MessageList(props) {
         )
     }
 
-    useEffect(() => {
+    // creating cometchat themes for custom message bubble UI
+    const handleThemes = () => {
         let definedTemplates = CometChatUIKit.getDataSource().getAllMessageTemplates();
         console.log(definedTemplates);
         // change bubble view for text messages 
@@ -92,7 +98,36 @@ function MessageList(props) {
             }
         })
         setCustomMessageTheme(customTemplatesList)
-    }, [])
+    }
+
+    useEffect(() => {
+        // upadte cometchat themes
+        handleThemes()
+
+        let listenerId = new Date().getTime();
+        CometChat.addMessageListener(
+            listenerId,
+            new CometChat.MessageListener({
+                onTextMessageReceived: message => {
+                    if (!message.parentMessageId) {
+                        console.log("normal messagereceived", message);
+                    } else {
+                        console.log("thread message received", message);
+                        handleThemes();
+                    }
+                },
+                onMessageEdited: msg => {
+                    if (msg.category === 'message') console.log("this is **********edidted message", msg);
+                }
+            })
+        );
+        // setCustomMessageTheme(customTemplatesList)
+    }, [trigger])
+
+    // trying to re-render the message list [under progress]
+    const renderAgain = () => {
+        setTrigger(!trigger)
+    }
 
     // cometchatmessages props
     const cometChatMessagesProps = {
@@ -103,6 +138,7 @@ function MessageList(props) {
         messagesStyle: new MessagesStyle({ background: "rgb(27, 27, 27)" })
     }
 
+    // toogle cometchat mesasge list height 
     const setEmojiKeyboardHeight = () => {
         isEmojiKeyboard ? emojiKeyboardHeight('81%') : emojiKeyboardHeight('40%')
         setIsEmojiKeyboard(!isEmojiKeyboard)
@@ -119,7 +155,7 @@ function MessageList(props) {
             </div>
 
             {/* messagelist composer view */}
-            <MessageListComposer props={props} textMessage={textMessage} setTextMessage={setTextMessage} threadParentMessageId={threadParentMessageId} setParentMessageIdHandler={setParentMessageIdHandler} setEmojiKeyboardHeight={setEmojiKeyboardHeight} setIsEmojiKeyboard={setIsEmojiKeyboard} />
+            <MessageListComposer props={props} textMessage={textMessage} setTextMessage={setTextMessage} threadParentMessageId={threadParentMessageId} setParentMessageIdHandler={setParentMessageIdHandler} setEmojiKeyboardHeight={setEmojiKeyboardHeight} setIsEmojiKeyboard={setIsEmojiKeyboard} emojiKeyboardHeight={emojiKeyboardHeight} renderAgain={renderAgain} />
         </div>
     )
 }

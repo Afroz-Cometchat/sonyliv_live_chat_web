@@ -3,14 +3,19 @@ import sendbutton from '../../../assets/images/sendbutton.png'
 import { useState } from "react";
 import CometChatEmojiKeyboardView from "./CometChatEmojiKeyboardView";
 
-function MessageListComposer({ props, textMessage, setTextMessage, threadParentMessageId, setParentMessageIdHandler, setEmojiKeyboardHeight, setIsEmojiKeyboard }) {
+function MessageListComposer({ props, textMessage, setTextMessage, threadParentMessageId, setParentMessageIdHandler, setIsEmojiKeyboard, setEmojiKeyboardHeight, emojiKeyboardHeight, renderAgain }) {
+    // handle to get cometchat emoji keyboad on emoji button click
     const [getCometChatEmojiKeyboard, setCometChatEmojiKeyboard] = useState(false);
 
+    // send new message normal or in thread both 
     const cometChatsendTextMessage = async (e) => {
         e.preventDefault();
-        sendTextMessage({ props, textMessage, setTextMessage, threadParentMessageId })
+        sendTextMessage({ props, textMessage, setTextMessage, threadParentMessageId, renderAgain })
         setCometChatEmojiKeyboard(false);
+        emojiKeyboardHeight('81%');
+        setIsEmojiKeyboard(false);
     }
+
     // set text message and remove parentid if its deleted from the input box
     const handleTexMessage = (e) => {
         setTextMessage(e.target.value)
@@ -25,6 +30,7 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
         setEmojiKeyboardHeight()
     }
 
+    // handle cometchat emoji keyboard styles
     const keyboardStyle = {
         width: "100%",
         height: "300px",
@@ -33,6 +39,7 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
         textColor: "#fff"
     }
 
+    // handle cometchat emoji keyboard emojies click
     function ccEmojiClicked(emojiData) {
         let selectedEmoji = emojiData.detail.id
         setTextMessage(textMessage + selectedEmoji)

@@ -9,7 +9,7 @@ import { CometChatUIKit } from "@cometchat/chat-uikit-react";
 import PollOptionWraper from "./Views";
 import { handleFlagUser, handleReportUser } from "../../Controllers";
 
-const ExtensionPollBubble = ({ message }) => {
+const ExtensionPollBubble = ({ message, updateGrouPollResults }) => {
     const [pollData, setPollData] = useState({});
     const [pollOptions, setPollOptions] = useState([]);
     const [totalVotes, setTotalVotes] = useState(0);
@@ -18,7 +18,7 @@ const ExtensionPollBubble = ({ message }) => {
     const [isActionsView, setIsActionsView] = useState(false);
 
     const sendVote = (vote) => {
-        votePoll(vote, pollData.id)
+        votePoll(vote, pollData.id, updateGrouPollResults)
     }
 
     // toogle view actions view
@@ -34,7 +34,7 @@ const ExtensionPollBubble = ({ message }) => {
         setTotalVotes(message.metadata?.["@injected"]?.extensions?.polls?.results?.total)
         const results = message.metadata?.["@injected"]?.extensions?.polls?.results?.options
         setPollResults(results)
-        console.log("results", message.metadata?.["@injected"]?.extensions?.polls?.results?.options);
+        // console.log("results", message.metadata?.["@injected"]?.extensions?.polls?.results?.options);
         CometChatUIKit.getLoggedinUser().then((user) => {
             getMyVote(user.name, options, results, setMyVote)
         })
@@ -70,7 +70,6 @@ const ExtensionPollBubble = ({ message }) => {
                         totalVotes={totalVotes} getVoterAvatars={getVoterAvatars} />)
                 }
             </div>
-            {/* navigation dots */}
         </div>
     )
 }

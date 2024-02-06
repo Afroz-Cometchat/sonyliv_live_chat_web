@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import './style.css'
+import { CometChat } from '@cometchat/chat-sdk-javascript';
 import { addCometChatReaction, addCometChatReactionLike } from './controller';
 import rightArrow from '../../assets/images/rightArrow.png'
 import flagUser from '../../assets/images/flagUser.png'
@@ -10,6 +11,7 @@ import sonylivadd from '../../assets/images/sonylivadd.png'
 import { handleFlagUser, handleReportUser } from '../../Controllers';
 
 function MessageBubble({ message, group, setParentMessageIdHandler }) {
+    console.log("message bubble message", message);
     const [showReactionsOptions, setShowReactionsOptions] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [isActionsView, setIsActionsView] = useState(false);
@@ -53,18 +55,45 @@ function MessageBubble({ message, group, setParentMessageIdHandler }) {
 
     // reply on thread
     const replyOnThread = () => {
+        console.log("gocha");
         setParentMessageIdHandler(message, message.sender.name)
     }
 
-    useEffect(() => {
+    // handle thread counts to show in bubble
+    const handleThreadCounts = () => {
         if (message.replyCount && message.replyCount > 0) {
             setReplyCount(message.replyCount)
             setShowViewReply(true)
         }
+    }
+
+    useEffect(() => {
+        handleThreadCounts()
     }, [message])
 
+
+    // [under progress]
+    useEffect(() => {
+        // let listenerId = new Date().getTime();
+        // CometChat.addMessageListener(
+        //     listenerId,
+        //     new CometChat.MessageListener({
+        //         onTextMessageReceived: message => {
+        //             if (!message.parentMessageId) {
+        //                 console.log("normal messagereceived", message);
+        //             } else {
+        //                 console.log("thread message received", message)
+        //                 setTimeout(() => {
+        //                     handleThreadCounts();
+        //                 }, 1000)
+        //             }
+        //         }
+        //     })
+        // );
+    }, [])
+
     return (
-        <div className="messageBubbleMainContainer">
+        <div className="messageBubbleMainContainer" key={message.id}>
             <div className="groupAvatarContainer">
                 <img src={message.sender.avatar} alt="" />
             </div>

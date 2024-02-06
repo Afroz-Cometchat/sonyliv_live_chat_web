@@ -1,24 +1,27 @@
-.home__container{
+.home__container {
     background-color: #000;
 }
 
-.home_container_iframe_container{
+.home_container_iframe_container {
     height: 92vh;
 }
 
-.iframe_container_text_container{
-        color: #fff;
-        text-align: center;
-        padding: 10px 0
+.iframe_container_text_container {
+    color: #fff;
+    text-align: center;
+    padding: 10px 0
 }
 
-.iframe_container_iframe{
+.iframe_container_iframe {
     border: none;
-    height: 90%; 
-    width: 100%; 
+    height: 90%;
+    width: 100%;
 }
 
-.home_container_livechat_button{
+.home_container_livechat_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: transparent;
     border: none;
     color: #fff;
@@ -26,4 +29,11 @@
     bottom: 5px;
     right: 800px;
     cursor: pointer;
+}
+
+.home_container_livechat_button .live_chat_icon {
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
+    margin-right: 4px;
 }

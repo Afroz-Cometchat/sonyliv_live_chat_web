@@ -1,12 +1,14 @@
 import { CometChat } from "@cometchat/chat-sdk-javascript"
 
 // vote for a poll
-const votePoll = (vote, id) => {
+const votePoll = (vote, id, updateGrouPollResults) => {
+    // console.log("yoo", vote, id);
     CometChat.callExtension('polls', 'POST', 'v2/vote', {
         vote,
         id,
     }).then(response => {
         // Successfully voted
+        updateGrouPollResults()
     })
         .catch(error => {
             // Error Occured

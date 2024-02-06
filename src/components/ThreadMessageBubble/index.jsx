@@ -6,6 +6,7 @@ import reportCross from '../../assets/images/reportCross.png'
 import { handleFlagUser, handleReportUser } from '../../Controllers';
 import { addCometChatReaction, addCometChatReactionLike } from '../MessageBubble/controller';
 import { MessageBubbleReactionsView } from '../MessageBubble/Views';
+import myReactionStatus from '../../assets/images/myReactionStatus.png'
 
 function ThreadMessageBubble({ message, group, setParentMessageIdHandler }) {
     const [showReactionsOptions, setShowReactionsOptions] = useState(false);
@@ -13,6 +14,8 @@ function ThreadMessageBubble({ message, group, setParentMessageIdHandler }) {
     const [isActionsView, setIsActionsView] = useState(false);
     const [reactionsCount, setReactionsCount] = useState(false);
     const [reactionsData, setReactionsData] = useState([]);
+    const [isMyReaction, setIsMyReaction] = useState(false);
+
     // toogle reaction options
     const toggleReactionsOptions = () => {
         setShowReactionsOptions(!showReactionsOptions)
@@ -67,7 +70,7 @@ function ThreadMessageBubble({ message, group, setParentMessageIdHandler }) {
                 <div className="bubbleBottomView">
                     <div className="bubbleActionsContainer">
                         <span className="addReaction">
-                            <span onClick={toggleReactionsOptions} className='cursorPointer'> {showReactionsOptions ? '×' : '+'} </span>
+                            <span onClick={toggleReactionsOptions} className='cursorPointer'> {showReactionsOptions ? '×' : isMyReaction ? <img src={myReactionStatus} alt="" className='myReactionStatusIcon' /> : '+'} </span>
                             {showReactionsOptions && <div className='reactionsContainer'>
                                 <span className="reactionEmoji cursorPointer" onClick={() => addReaction('😍')}>😍</span>
                                 <span className="reactionEmoji cursorPointer" onClick={() => addReaction('😡')}>😡</span>
@@ -82,7 +85,7 @@ function ThreadMessageBubble({ message, group, setParentMessageIdHandler }) {
                         <span className="replyMessage cursorPointer" onClick={replyOnThread}>Reply</span>
                     </div>
                     <div className="bubbleReactionsCount">
-                        <MessageBubbleReactionsView message={message} setReactionsCount={setReactionsCount} setReactionsData={setReactionsData} setIsLiked={setIsLiked} reactionsData={reactionsData} reactionsCount={reactionsCount} />
+                        <MessageBubbleReactionsView message={message} setReactionsCount={setReactionsCount} setReactionsData={setReactionsData} setIsLiked={setIsLiked} reactionsData={reactionsData} reactionsCount={reactionsCount} setIsMyReaction={setIsMyReaction} />
                     </div>
                 </div>
             </div>

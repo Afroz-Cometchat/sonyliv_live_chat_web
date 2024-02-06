@@ -45,7 +45,7 @@ function MessageList(props) {
 
     // render custom message bubble
     const getBubbleView = (message) => {
-        console.log('parentbubble', message);
+        // console.log('parentbubble', message);
         return (
             <>
                 <MessageBubble message={message} group={props.joinedGroup} setParentMessageIdHandler={setParentMessageIdHandler} />

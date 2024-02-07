@@ -35,15 +35,18 @@
 }
 
 .groups_list {
+    display: flex;
+    flex-direction: column;
     height: 92%;
-    overflow: hidden;
 }
 
+
 .group_extension_wrapper {
-    padding: 0 10px;
+    padding: 10px 10px 0 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: -28px;
 }
 
 .groupListItem {
@@ -109,25 +112,20 @@
 
 
 .live_reaction_emoji {
-    /* width: 50px;
-    height: 50px; */
-    /* object-fit: cover;
-    border-radius: 50%;
-    cursor: pointer; */
-    font-size: 35px;
+    font-size: 30px;
 }
 
 .live_reaction_container img {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     object-fit: cover;
     border-radius: 50%;
     cursor: pointer;
 }
 
 .live_reaction_container .main_live_emoji {
-    width: 50px;
-    height: 50px;
+    /* margin-right: 6px; */
+    padding: 0 4px;
 }
 
 .live_reaction_container {
@@ -135,14 +133,19 @@
     right: 30px;
     bottom: 20px;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .other_live_reaction_container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     background-color: rgb(44, 44, 44);
-    padding: 10px 4px;
-    border-radius: 40px;
+    padding: 10px 4px 46px 4px;
+    border-radius: 60px;
+    margin-bottom: -45px;
 }
 
 .other_live_reaction_container>span {

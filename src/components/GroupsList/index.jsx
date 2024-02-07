@@ -36,10 +36,10 @@ function GroupsList(props) {
     // set cometchat group props
     const cometChatGroupProps = {
         listItemView,
-        title: false,
+        title: null,
         hideSearch: true,
         groupsRequestBuilder,
-        groupsStyle: new GroupsStyle()
+        groupsStyle: new GroupsStyle(),
     }
 
     return (

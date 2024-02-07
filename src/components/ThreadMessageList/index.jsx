@@ -55,6 +55,7 @@ function ThreadMessageList(props) {
                 messagesRequestBuilder={messagesRequestBuilder}
                 messageListStyle={new MessageListStyle({ background: "rgb(27, 27, 27)", width: "100%", padding: "0" })}
                 templates={customMessageTheme}
+                hideDateSeparator={true}
             />
         </div>
     )

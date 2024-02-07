@@ -119,7 +119,7 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
                             alt=""
                             onClick={() => sendLiveReaction()}
                             className='main_live_emoji'
-                            />
+                        />
                     </span>
                 </div>
             }

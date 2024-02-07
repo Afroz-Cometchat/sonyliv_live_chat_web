@@ -37,8 +37,7 @@ function MessageList(props) {
         templates: customMessageTheme,
         showAvatar: false,
         messagesRequestBuilder,
-        DateSeparatorPattern: null,
-        dateSeparatorStyle: null
+        hideDateSeparator: true
     })
 
 

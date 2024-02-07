@@ -37,8 +37,8 @@
 }
 
 .message_list_container .messageList {
-    /* max-height: 28%; */
     width: 100%;
+    overflow: hidden;
 }
 
 .group_icon {
@@ -49,18 +49,10 @@
 }
 
 .message_list_composer_container {
-    /* height: 20px; */
     justify-content: center;
     align-items: center;
     padding: 10px;
     border-top: 1px solid rgb(113, 113, 113);
-}
-
-.composer_form_container{
-    /* height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; */
 }
 
 .message_list_composer_container form {

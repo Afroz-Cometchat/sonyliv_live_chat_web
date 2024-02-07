@@ -10,11 +10,11 @@
     color: #ffff;
 }
 
-.group_list_wrapper{
+.group_list_wrapper {
     height: 100%;
 }
 
-.group_list_wrapper div::-webkit-scrollbar{
+.group_list_wrapper div::-webkit-scrollbar {
     display: none;
 }
 
@@ -35,7 +35,8 @@
 }
 
 .groups_list {
-    height: 64%;
+    height: 92%;
+    overflow: hidden;
 }
 
 .group_extension_wrapper {
@@ -124,7 +125,7 @@
     cursor: pointer;
 }
 
-.live_reaction_container .main_live_emoji{
+.live_reaction_container .main_live_emoji {
     width: 50px;
     height: 50px;
 }
@@ -136,7 +137,7 @@
     cursor: pointer;
 }
 
-.other_live_reaction_container{
+.other_live_reaction_container {
     display: flex;
     flex-direction: column;
     background-color: rgb(44, 44, 44);
@@ -144,7 +145,7 @@
     border-radius: 40px;
 }
 
-.other_live_reaction_container > span{
+.other_live_reaction_container>span {
     margin: 3px 0;
     cursor: pointer;
 }

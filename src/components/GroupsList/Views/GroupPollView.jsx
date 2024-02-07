@@ -33,8 +33,6 @@ const GroupPollView = () => {
                 onMessageEdited: editedMsg => {
                     // to update the group poll results
                     if (editedMsg.id === groupPoll.id) {
-                        console.log("sdfsdfdsfsdf");
-                        console.log("work");
                         updateGrouPollResults()
                     }
                 }

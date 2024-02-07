@@ -69,7 +69,6 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
             listenerId,
             new CometChat.MessageListener({
                 onTransientMessageReceived: transientMessage => {
-                    console.log("received tranmsg", transientMessage);
                     if (transientMessage.data.LIVE_REACTION === "heart") {
                         setReactionURL(solylivhearticon)
                     } else if (transientMessage.data.LIVE_REACTION === "SMILING_FACE_WITH_HEART_SHAPED_EYES") {

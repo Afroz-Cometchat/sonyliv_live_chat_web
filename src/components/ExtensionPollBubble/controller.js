@@ -30,7 +30,6 @@ const getMyVote = (name, options, result, setMyVote) => {
 
 // get voter avatars
 const getVoterAvatars = (pollResults, ele) => {
-    console.log("voter", pollResults);
     let avatars = []
     const voters = Object.keys(pollResults[ele].voters || {})
     for (let i = 0; i < voters.length; i++) {

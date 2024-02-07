@@ -40,7 +40,7 @@ const ExtensionPollBubble = ({ message, updateGrouPollResults }) => {
 
     return (
         <div className="extension_poll_bubble_container">
-            <span className='verticalNavDots cursorPointer' onClick={toogleViewActions}>⋮ </span>
+            <span className='verticalNavDots cursorPointer'>⋮ </span>
             {isActionsView && <div className="actionsContainer">
                 <div className="reportUserContainer" onClick={() => handleReportUser(message.sender.uid)}>
                     <span><img src={reportCross} alt="" className='actionIcons' /></span>

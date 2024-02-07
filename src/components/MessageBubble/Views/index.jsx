@@ -12,6 +12,7 @@ const MessageBubbleReactionsView = ({ message, setIsLiked, setIsMyReaction }) =>
                 let myReactionFlag = true;
                 for (let k in message.metadata?.['@injected']?.extensions?.reactions) {
                     let myCount = Object.keys(message.metadata?.['@injected']?.extensions?.reactions[k]);
+                    if(k==='🛵') continue;
                     count += myCount.length
                     if (myCount.includes(user.name)) {
                         setIsMyReaction(true);
@@ -22,11 +23,12 @@ const MessageBubbleReactionsView = ({ message, setIsLiked, setIsMyReaction }) =>
                 setReactionsCount(count)
                 setReactionsData(reactionsDataTemp)
                 let flag = true;
-                if (reactionsDataTemp.includes('👍')) {
+                if (reactionsDataTemp.includes('🛵')) {
                     for (let k in message.metadata?.['@injected']?.extensions?.reactions) {
-                        if (k === '👍')
+                        if (k === '🛵')
                             for (let j in message.metadata?.['@injected']?.extensions?.reactions[k]) {
                                 if (j === user.name) {
+                                    setReactionsCount(reactionsCount - 1)
                                     setIsLiked(true)
                                     flag = false
                                     return;
@@ -45,7 +47,11 @@ const MessageBubbleReactionsView = ({ message, setIsLiked, setIsMyReaction }) =>
                 reactionsCount > 0 ?
                     <div className='reactionEmojiContainer'>
                         <div className='reactionsEmojis'>
-                            {reactionsData.map(ele => <span>{ele}</span>)}
+                            {reactionsData.map((ele) => {
+                                if (ele !== '🛵') {
+                                    return <span>{ele}</span>
+                                }
+                            })}
                         </div>
                         <span className='reactionsCount'>{reactionsCount}</span>
                     </div> : null

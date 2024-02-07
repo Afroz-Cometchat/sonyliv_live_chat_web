@@ -30,10 +30,11 @@ const getMyVote = (name, options, result, setMyVote) => {
 
 // get voter avatars
 const getVoterAvatars = (pollResults, ele) => {
+    console.log("voter", pollResults);
     let avatars = []
     const voters = Object.keys(pollResults[ele].voters || {})
     for (let i = 0; i < voters.length; i++) {
-        avatars.push(pollResults[ele].voters[voters[i]].avatar)
+        avatars.push({ avatar: pollResults[ele].voters[voters[i]].avatar, name: pollResults[ele].voters[voters[i]].name })
     }
     return avatars;
 }

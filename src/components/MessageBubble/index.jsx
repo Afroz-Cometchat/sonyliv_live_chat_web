@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './style.css'
 import { addCometChatReaction, addCometChatReactionLike } from './controller';
 import rightArrow from '../../assets/images/rightArrow.png'
@@ -9,6 +9,14 @@ import { MessageBubbleReactionsView } from './Views';
 import sonylivadd from '../../assets/images/sonylivadd.png'
 import { handleFlagUser, handleReportUser } from '../../Controllers';
 import myReactionStatus from '../../assets/images/myReactionStatus.png'
+import { createComponent } from '@lit/react';
+import { AvatarStyle } from '@cometchat/uikit-elements';
+
+const AvatarView = createComponent({
+    react: React,
+    elementClass: AvatarStyle,
+    tagName: "cometchat-avatar"
+})
 
 function MessageBubble({ message, group, setParentMessageIdHandler }) {
     const [showReactionsOptions, setShowReactionsOptions] = useState(false);
@@ -55,7 +63,24 @@ function MessageBubble({ message, group, setParentMessageIdHandler }) {
     return (
         <div className="message_bubble_main_container" key={message.id}>
             <div className="group_avatar_container">
-                <img src={message.sender.avatar} alt="" />
+                {/* <img src={message.sender.avatar} alt="" /> */}
+                {/* <cometchat-avatar image={message.sender.avatar} name={message.sender.name} /> */}
+                <AvatarView image={message.sender.avatar}
+                    name={message.sender.name}
+                    avatarStyle={JSON.stringify({
+                        borderRadius: "50%",
+                        width: "30px",
+                        height: "30px",
+                        border: "1px solid rgb(238 238 238)",
+                        backgroundColor: "lightgrey",
+                        nameTextColor: "rgb(20,20,20)",
+                        backgroundSize: "cover",
+                        nameTextFont: "500 16px Inter",
+                        outerViewBorderWidth: "0",
+                        outerViewBorderColor: "transparent",
+                        border: "none",
+                    })}
+                />
             </div>
             <div className="bubble_content_container">
                 {/* bubble text message view */}
@@ -85,7 +110,7 @@ function MessageBubble({ message, group, setParentMessageIdHandler }) {
                                 <span className="reactionEmoji cursorPointer" onClick={() => addReaction('😡')}>😡</span>
                                 <span className="reactionEmoji cursorPointer" onClick={() => addReaction('😆')}>😆</span>
                                 <span className="reactionEmoji cursorPointer" onClick={() => addReaction('😯')}>😯</span>
-                                <span className="reactionEmoji cursorPointer" onClick={addReactionLike}>👍</span>
+                                <span className="reactionEmoji cursorPointer" onClick={() => addReaction('👍')}>👍</span>
                                 <span className="reactionEmoji cursorPointer" onClick={() => addReaction('😢')}>😢</span>
                                 <span className="reactionEmoji cursorPointer" onClick={() => addReaction('💗')}>💗</span>
                             </div>}

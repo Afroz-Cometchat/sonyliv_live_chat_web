@@ -1,4 +1,13 @@
+import { AvatarStyle } from "@cometchat/uikit-elements";
+import { createComponent } from "@lit/react";
+import React from "react";
+
 const PollOptionWraper = ({ message, sendVote, ele, myVote, pollData, pollResults, totalVotes, getVoterAvatars }) => {
+    const AvatarView = createComponent({
+        react: React,
+        elementClass: AvatarStyle,
+        tagName: "cometchat-avatar"
+    })
     return (
         <div className="poll_option">
             <input type="radio" name={message.id} className="poll_option_radio" onChange={() => sendVote(ele)} checked={ele === myVote} />
@@ -15,8 +24,26 @@ const PollOptionWraper = ({ message, sendVote, ele, myVote, pollData, pollResult
                     pollResults[ele].count > 0 ? <div className="poll_voters_container">
                         <div className="voter_image_wraper">
                             {
-                                getVoterAvatars(pollResults, ele).map(ele => <span>
-                                    <img src={ele} alt="" className="voter_image" />
+                                getVoterAvatars(pollResults, ele).map(({ avatar, name }) => <span>
+                                    {/* <img src={avatar} alt="" className="voter_image" /> */}
+                                    <span>
+                                        <AvatarView image={avatar}
+                                            name={name}
+                                            avatarStyle={JSON.stringify({
+                                                borderRadius: "50%",
+                                                width: "20px",
+                                                height: "20px",
+                                                border: "1px solid rgb(238 238 238)",
+                                                backgroundColor: "lightgrey",
+                                                nameTextColor: "rgb(20,20,20)",
+                                                backgroundSize: "cover",
+                                                nameTextFont: "500 16px Inter",
+                                                outerViewBorderWidth: "0",
+                                                outerViewBorderColor: "transparent",
+                                                border: "none",
+                                            })}
+                                        />
+                                    </span>
                                 </span>)
                             }
                         </div>

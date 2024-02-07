@@ -6,7 +6,8 @@ export default function MessageListHeader(props) {
                 <img src={backbutton} alt="" onClick={props.closeGroup} />
             </span>
             <div className="groupIconContainer">
-                <img src={props.joinedGroup.icon} alt="" className="group_icon" />
+                {/* <img src={props.joinedGroup.icon} alt="" className="group_icon" /> */}
+                <cometchat-avatar image={props.joinedGroup.icon} name={props.joinedGroup.name} />
             </div>
             <p className="groupDiscriptionText">{props.joinedGroup.description}</p>
         </div>

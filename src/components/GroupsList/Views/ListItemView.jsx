@@ -1,10 +1,36 @@
+import { AvatarStyle } from "@cometchat/uikit-elements";
+import { createComponent } from "@lit/react";
+import React from "react";
+
+const AvatarView = createComponent({
+    react: React,
+    elementClass: AvatarStyle,
+    tagName: "cometchat-avatar"
+})
+
 const ListItemView = ({ group, joinGroupHandler }) => {
     return (
         <div className="groupListItem" style={{
             width: `${Math.floor(Math.random() * 21) + 60}%`
         }}>
             <div className="groupIconContainer">
-                <img src={group.icon} alt="" className='groupAvatar' />
+                <AvatarView image={group.icon}
+                    name={group.name}
+                    avatarStyle={JSON.stringify({
+                        borderRadius: "50%",
+                        width: "40px",
+                        height: "40px",
+                        border: "1px solid rgb(238 238 238)",
+                        backgroundColor: "lightgrey",
+                        nameTextColor: "rgb(20,20,20)",
+                        backgroundSize: "cover",
+                        nameTextFont: "500 16px Inter",
+                        outerViewBorderWidth: "0",
+                        outerViewBorderColor: "transparent",
+                        border: "none"
+                    })}
+                />
+                {/* <CometCHatAva */}
             </div>
             <div className="groupDescriptionBox">
                 <span className='gpoupName'>#{group.name}</span>

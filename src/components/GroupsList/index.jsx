@@ -8,6 +8,13 @@ import ListItemView from './Views/ListItemView';
 import { CometChatLiveReactionView } from './Views/LiveReaction';
 import ExtensionPollBubble from '../ExtensionPollBubble';
 import fireHeart from '../../assets/images/fireHeart.png'
+import SMILING_FACE_WITH_HEART_SHAPED_EYES from '../../assets/images/SMILING-FACE-WITH_HEART-SHAPED-EYES.png'
+import pouting from '../../assets/images/pouting.png'
+import smiling_face_open_mouth from '../../assets/images/smiling_face_open_mouth.png'
+import hushed_face from '../../assets/images/hushed_face.png'
+import thumbsup from '../../assets/images/thumbsup.png'
+import crying_face from '../../assets/images/Crying_Face.png'
+import fire_emoji from '../../assets/images/fire_emoji.png'
 // import CometChatLiveReactionView from './Views/LiveReaction';
 
 function GroupsList(props) {
@@ -65,20 +72,22 @@ function GroupsList(props) {
     }
 
     // send live reaction [under progress]
-    const sendLiveReaction = useCallback(() => {
+    const sendLiveReaction = () => {
         if (timer.current !== null) return;
-        let receiverId = "100thieves";
+        setReactionURL(solylivhearticon)
+        let receiverId = "supergroup";
         let receiverType = CometChat.RECEIVER_TYPE.GROUP;
         timer.current = setTimeout(() => {
             setShowReactions(true)
-            const data = { type: "reaction", reactionURL: "https://emojiisland.com/cdn/shop/products/Emoji_Icon_-_Sunglasses_cool_emoji_large.png?v=1571606093" };
-            CometChat.getLoggedinUser().then((user) => {
-                let transientMessage = new CometChat.TransientMessage(receiverId, receiverType, data).setSender(user)
-                CometChat.sendTransientMessage(transientMessage);
-            })
+            // const data = { type: "reaction", reactionURL: "https://emojiisland.com/cdn/shop/products/Emoji_Icon_-_Sunglasses_cool_emoji_large.png?v=1571606093" };
+            let data = { "LIVE_REACTION": "heart" };
+            // CometChat.getLoggedinUser().then((user) => {
+            let transientMessage = new CometChat.TransientMessage(receiverId, receiverType, data)
+            CometChat.sendTransientMessage(transientMessage);
+            // })
             setTimeout(() => {
                 setShowReactions(false)
-            }, 2500);
+            }, 1500);
             timer.current = null;
         }, 250);
         // console.log("start");
@@ -94,7 +103,7 @@ function GroupsList(props) {
         // CometChatMessageEvents.ccLiveReaction.next(reactionURL);
         // console.log("end");
         // setReactionIconURL("https://emojiisland.com/cdn/shop/products/Emoji_Icon_-_Sunglasses_cool_emoji_large.png?v=1571606093")
-    }, [])
+    }
 
     useEffect(() => {
         // listeneres
@@ -102,14 +111,6 @@ function GroupsList(props) {
         CometChat.addMessageListener(
             listenerId,
             new CometChat.MessageListener({
-                onTransientMessageReceived: transientMessage => {
-                    console.log('transient message received', transientMessage);
-                    setReactionURL(transientMessage.data.reactionURL)
-                    setShowReactions(true)
-                    setTimeout(() => {
-                        setShowReactions(false)
-                    }, 2500);
-                },
                 onCustomMessageReceived: customMessage => {
                     console.log("Custom message received successfully", customMessage);
                 },
@@ -149,23 +150,44 @@ function GroupsList(props) {
             }
         );
 
-        let listenerId = new Date().getTime();
-        CometChat.addMessageListener(
-            listenerId,
-            new CometChat.MessageListener({
-                onTransientMessageReceived: transientMessage => {
-                    console.log('transient message received', transientMessage);
-                    setReactionURL("https://i.pinimg.com/474x/fc/57/8b/fc578b392d04c6885249f36413da7cbf.jpg")
-                    setShowReactions(true)
-                    setTimeout(() => {
-                        setShowReactions(false)
-                    }, 2500);
-                },
-                onCustomMessageReceived: customMessage => {
-                    console.log("Custom message received successfully", customMessage);
-                },
-            })
-        );
+        // let listenerId = new Date().getTime();
+        // CometChat.addMessageListener(
+        //     listenerId,
+        //     new CometChat.MessageListener({
+        //         onTransientMessageReceived: transientMessage => {
+        //             // console.log('transient message received', transientMessage);
+        //             if (transientMessage.data.LIVE_REACTION === "heart") {
+        //                 setReactionURL(solylivhearticon)
+        //             } else if (transientMessage.data.LIVE_REACTION === "SMILING_FACE_WITH_HEART_SHAPED_EYES") {
+        //                 console.log("this is smiling face reaction");
+        //                 setReactionURL(SMILING_FACE_WITH_HEART_SHAPED_EYES)
+        //             } else if (transientMessage.data.LIVE_REACTION === "pouting") {
+        //                 setReactionURL(pouting)
+        //             } else if (transientMessage.data.LIVE_REACTION === "smiling_face_open_mouth") {
+        //                 setReactionURL(smiling_face_open_mouth)
+        //             }else if(transientMessage.data.LIVE_REACTION === "hushed_face"){
+        //                 setReactionURL(hushed_face)
+        //             }else if(transientMessage.data.LIVE_REACTION === "fireHeart"){
+        //                 setReactionURL(fireHeart)
+        //             }else if(transientMessage.data.LIVE_REACTION === "thumbsup"){
+        //                 setReactionURL(thumbsup)
+        //             }else if(transientMessage.data.LIVE_REACTION === "crying_face"){
+        //                 setReactionURL(crying_face)
+        //             }else if(transientMessage.data.LIVE_REACTION === "fire_emoji"){
+        //                 setReactionURL(fire_emoji)
+        //             }
+        //             setTimeout(() => {
+        //                 setShowReactions(true)
+        //                 setTimeout(() => {
+        //                     setShowReactions(false)
+        //                 }, 1500);
+        //             }, 250);
+        //         },
+        //         onCustomMessageReceived: customMessage => {
+        //             console.log("Custom message received successfully", customMessage);
+        //         },
+        //     })
+        // );
 
     }, [triggerGrouPoll])
 
@@ -180,12 +202,24 @@ function GroupsList(props) {
     }
 
     // handle other live reactions click
-    const sendOtherLiveReaction = (reaction) => {
+    const sendOtherLiveReaction = (reaction, reactionName) => {
+        setReactionURL(reaction)
         setShowReactions(true)
         setTimeout(() => {
             setShowReactions(false)
-        }, 2500);
+        }, 1500);
         setShowLiveReactionOptions(false)
+        // send         setReactionURL(solylivhearticon)
+        let receiverId = "supergroup";
+        let receiverType = CometChat.RECEIVER_TYPE.GROUP;
+        let data = { "LIVE_REACTION": reactionName };
+        // CometChat.getLoggedinUser().then((user) => {
+        let transientMessage = new CometChat.TransientMessage(receiverId, receiverType, data)
+        CometChat.sendTransientMessage(transientMessage);
+        // })
+        setTimeout(() => {
+            setShowReactions(false)
+        }, 1500);
     }
 
     return (
@@ -207,21 +241,21 @@ function GroupsList(props) {
                             <div>
                                 {/* {showReactions && <CometChatLiveReactionView />} */}
                                 {/* {memoizedChild} */}
-                                <CometChatLiveReactionView showReactions={showReactions} reactionURL={'https://i.pinimg.com/474x/fc/57/8b/fc578b392d04c6885249f36413da7cbf.jpg'} />
+                                {/* <CometChatLiveReactionView showReactions={showReactions} reactionURL={reactionURL} /> */}
                             </div>
                         </div>
                 }
-                {joinedGroup ? <></> :
+                {/* {joinedGroup ? <></> :
                     <div className='live_reaction_container'>
                         {showLiveReactionOptions && <div className='other_live_reaction_container'>
-                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction("ji")}>&#128525;</span>
-                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction("ji")}>&#128545;</span>
-                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction("ji")}>&#128518;</span>
-                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction("ji")}>&#128559;</span>
-                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction("ji")}><img src={fireHeart} alt="" /></span>
-                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction("ji")}>&#128077;</span>
-                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction("ji")}>&#128546;</span>
-                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction("ji")}>&#128293;</span>
+                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(SMILING_FACE_WITH_HEART_SHAPED_EYES, "SMILING_FACE_WITH_HEART_SHAPED_EYES")}>&#128525;</span>
+                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(pouting, "pouting")}>&#128545;</span>
+                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(smiling_face_open_mouth, "smiling_face_open_mouth")}>&#128518;</span>
+                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(hushed_face, "hushed_face")}>&#128559;</span>
+                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(fireHeart, "fireHeart")}><img src={fireHeart} alt="" /></span>
+                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(thumbsup, "thumbsup")}>&#128077;</span>
+                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(crying_face, "crying_face")}>&#128546;</span>
+                            <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(fire_emoji, "fire_emoji")}>&#128293;</span>
                         </div>}
                         <span className='live_reaction_emoji'>
                             <img
@@ -231,7 +265,9 @@ function GroupsList(props) {
                                 className='main_live_emoji'
                                 onDoubleClick={handleDoubleClick} />
                         </span>
-                    </div>}
+                    </div>} */}
+                <CometChatLiveReactionView joinedGroup={joinedGroup} />
+
             </div>
         </div>
     )

@@ -8,6 +8,7 @@ import COMETCHAT_CONSTANTS from './CONSTS';
 
 
 (() => {
+  let userToken = prompt('Enter user AuthToken')
   const UIKitSettings = new UIKitSettingsBuilder()
     .setAppId(COMETCHAT_CONSTANTS.APP_ID)
     .setRegion(COMETCHAT_CONSTANTS.REGION)
@@ -21,7 +22,7 @@ import COMETCHAT_CONSTANTS from './CONSTS';
     CometChatUIKit.getLoggedinUser().then(user => {
       if(!user){
         //Login user
-        CometChatUIKit.loginWithAuthToken("christinerussell_1702646131794d006c4a8906447168f6fdbcb57c").then(user => {        
+        CometChatUIKit.loginWithAuthToken(userToken).then(user => {        
           console.log("Login Successful:", { user });
           //mount your app        
         }).catch(console.log);

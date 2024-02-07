@@ -6,7 +6,7 @@ import smiling_face_open_mouth from '../../../assets/images/smiling_face_open_mo
 import hushed_face from '../../../assets/images/hushed_face.png'
 import thumbsup from '../../../assets/images/thumbsup.png'
 import crying_face from '../../../assets/images/Crying_Face.png'
-import fire_emoji from '../../../assets/images/fireHeart.png'
+import fire_emoji from '../../../assets/images/fire_emoji.png'
 import solylivhearticon from '../../../assets/images/solylivhearticon.png'
 
 import { CometChat } from '@cometchat/chat-sdk-javascript';

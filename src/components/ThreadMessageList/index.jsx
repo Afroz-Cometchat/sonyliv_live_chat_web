@@ -45,7 +45,7 @@ function ThreadMessageList(props) {
             }
         })
         setCustomMessageTheme(customTemplatesList)
-    }, [])
+    }, [props])
 
     return (
         <div className="threadMessageList">

@@ -1,22 +1,22 @@
-.messageBubbleMainContainer * {
+.message_bubble_main_container * {
     margin: 0;
     padding: 0;
 }
 
-.messageBubbleMainContainer {
+.message_bubble_main_container {
     width: 100%;
     display: flex;
     justify-content: space-between;
     position: relative;
 }
 
-.bubbleContentConatainer {
+.bubble_content_container {
     /* margin-left: 10px; */
     width: 90%;
     /* border: 1px solid lime; */
 }
 
-.bubbleTextContainer {
+.bubble_text_container {
     background-color: rgb(44, 44, 44);
     font-size: 12px;
     padding: 8px 15px 8px 8px;
@@ -34,18 +34,18 @@
     font-weight: bold;
 }
 
-.bubbleSenderName{
+.bubble_sender_name{
     font-weight: bold;
     color: #fff;
 }
 
-.groupAvatarContainer {
+.group_avatar_container {
     width: 30px;
     height: 30px;
     /* border: 1px solid lime; */
 }
 
-.groupAvatarContainer img {
+.group_avatar_container img {
     height: 100%;
     width: 100%;
     object-fit: cover;

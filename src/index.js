@@ -17,13 +17,11 @@ import COMETCHAT_CONSTANTS from './CONSTS';
     .build();
   //Initialize CometChat UIKit
   CometChatUIKit.init(UIKitSettings).then(() => {
-    console.log("Initialization completed successfully");
     // You can now call login function.
     CometChatUIKit.getLoggedinUser().then(user => {
       if(!user){
         //Login user
         CometChatUIKit.loginWithAuthToken(userToken).then(user => {        
-          console.log("Login Successful:", { user });
           //mount your app        
         }).catch(console.log);
       } else {

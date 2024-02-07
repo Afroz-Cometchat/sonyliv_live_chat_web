@@ -4,11 +4,9 @@ import ExtensionPollBubble from "../../ExtensionPollBubble";
 
 const GroupPollView = () => {
     const [groupPoll, setGroupPoll] = useState(false);
-    const [triggerGrouPoll, setTriggerGrouPoll] = useState(false);
 
     // update group poll result
     const updateGrouPollResults = () => {
-        console.log("updateing");
         const pollsRequestBuilder = new CometChat.MessagesRequestBuilder()
             .setGUID("supergroup")
             .setLimit(1)
@@ -24,7 +22,6 @@ const GroupPollView = () => {
                 console.log("Message fetching failed with error:", error);
             }
         );
-        // setTriggerGrouPoll(!triggerGrouPoll)
     }
 
     useEffect(() => {
@@ -33,15 +30,9 @@ const GroupPollView = () => {
         CometChat.addMessageListener(
             listenerId,
             new CometChat.MessageListener({
-                onCustomMessageReceived: customMessage => {
-                    console.log("Custom message received successfully", customMessage);
-                },
                 onMessageEdited: editedMsg => {
                     // to update the group poll results
                     if (editedMsg.id === groupPoll.id) {
-                        console.log("hii");
-                        console.log("gochaa");
-                        // setTriggerGrouPoll(!triggerGrouPoll)
                         updateGrouPollResults()
                     }
                 }

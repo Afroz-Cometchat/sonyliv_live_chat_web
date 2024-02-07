@@ -21,20 +21,18 @@ const ExtensionPollBubble = ({ message, updateGrouPollResults }) => {
         votePoll(vote, pollData.id, updateGrouPollResults)
     }
 
-    // toogle view actions view
+    // toogle actions view
     const toogleViewActions = () => {
         setIsActionsView(!isActionsView)
     }
 
     useEffect(() => {
-        // console.log(message.metadata?.["@injected"]?.extensions?.polls);
         setPollData(message.metadata?.["@injected"]?.extensions?.polls);
         const options = Object.keys(message.metadata?.["@injected"]?.extensions?.polls?.options)
         setPollOptions(options)
         setTotalVotes(message.metadata?.["@injected"]?.extensions?.polls?.results?.total)
         const results = message.metadata?.["@injected"]?.extensions?.polls?.results?.options
         setPollResults(results)
-        // console.log("results", message.metadata?.["@injected"]?.extensions?.polls?.results?.options);
         CometChatUIKit.getLoggedinUser().then((user) => {
             getMyVote(user.name, options, results, setMyVote)
         })
@@ -73,5 +71,5 @@ const ExtensionPollBubble = ({ message, updateGrouPollResults }) => {
         </div>
     )
 }
-// v/sum *100
+
 export default ExtensionPollBubble;

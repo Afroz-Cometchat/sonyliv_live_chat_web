@@ -18,7 +18,6 @@ function MessageList(props) {
     const [isEmojiKeyboard, setIsEmojiKeyboard] = useState(false);
     // handle cometchat messagelist height according to the presence of cometchat emoji keyboard
     const [getEmojiKeyboardHeight, emojiKeyboardHeight] = useState('81%')
-    const [trigger, setTrigger] = useState(false);
 
     // messagesRequestBuilder
     let messagesRequestBuilder = new CometChat.MessagesRequestBuilder()
@@ -45,7 +44,6 @@ function MessageList(props) {
 
     // render custom message bubble
     const getBubbleView = (message) => {
-        // console.log('parentbubble', message);
         return (
             <>
                 <MessageBubble message={message} group={props.joinedGroup} setParentMessageIdHandler={setParentMessageIdHandler} />
@@ -68,7 +66,6 @@ function MessageList(props) {
     // creating cometchat themes for custom message bubble UI
     const handleThemes = () => {
         let definedTemplates = CometChatUIKit.getDataSource().getAllMessageTemplates();
-        console.log(definedTemplates);
         // change bubble view for text messages 
         let customTemplatesList = definedTemplates.map((message) => {
             if (message.type === "text" && message.category === "message") {
@@ -101,33 +98,8 @@ function MessageList(props) {
     }
 
     useEffect(() => {
-        // upadte cometchat themes
         handleThemes()
-
-        let listenerId = new Date().getTime();
-        CometChat.addMessageListener(
-            listenerId,
-            new CometChat.MessageListener({
-                onTextMessageReceived: message => {
-                    if (!message.parentMessageId) {
-                        console.log("normal messagereceived", message);
-                    } else {
-                        console.log("thread message received", message);
-                        handleThemes();
-                    }
-                },
-                onMessageEdited: msg => {
-                    if (msg.category === 'message') console.log("this is **********edidted message", msg);
-                }
-            })
-        );
-        // setCustomMessageTheme(customTemplatesList)
-    }, [trigger])
-
-    // trying to re-render the message list [under progress]
-    const renderAgain = () => {
-        setTrigger(!trigger)
-    }
+    }, [])
 
     // cometchatmessages props
     const cometChatMessagesProps = {
@@ -145,7 +117,7 @@ function MessageList(props) {
     }
 
     return (
-        <div className="messageListContainer">
+        <div className="message_list_container">
             {/* message list header view */}
             <MessageListHeader {...props} />
 
@@ -155,7 +127,7 @@ function MessageList(props) {
             </div>
 
             {/* messagelist composer view */}
-            <MessageListComposer props={props} textMessage={textMessage} setTextMessage={setTextMessage} threadParentMessageId={threadParentMessageId} setParentMessageIdHandler={setParentMessageIdHandler} setEmojiKeyboardHeight={setEmojiKeyboardHeight} setIsEmojiKeyboard={setIsEmojiKeyboard} emojiKeyboardHeight={emojiKeyboardHeight} renderAgain={renderAgain} />
+            <MessageListComposer props={props} textMessage={textMessage} setTextMessage={setTextMessage} threadParentMessageId={threadParentMessageId} setParentMessageIdHandler={setParentMessageIdHandler} setEmojiKeyboardHeight={setEmojiKeyboardHeight} setIsEmojiKeyboard={setIsEmojiKeyboard} emojiKeyboardHeight={emojiKeyboardHeight} setThreadParentMessageId={setThreadParentMessageId} />
         </div>
     )
 }

@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@cometchat/chat-sdk-javascript": "^4.0.3",
-    "@cometchat/chat-uikit-react": "^4.2.1-sonylivtesting-1",
+    "@cometchat/chat-uikit-react": "^4.2.1-sonylivtesting-5",
     "@cometchat/uikit-elements": "^4.2.1",
     "@cometchat/uikit-resources": "^4.2.2",
     "@cometchat/uikit-shared": "^4.2.1",

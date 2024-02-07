@@ -19,14 +19,12 @@ export default function Home() {
 
     return (
         <div className="home__container">
-            <div>
+            <div className="home_iframe_wrapper">
                 <div style={{
-                    width: `${show_chat ? "67vw" : "100vw"}`,
+                    width: `${show_chat ? "67%" : "100%"}`,
                 }} className="home_container_iframe_container">
                     <div className="iframe_container_text_container">
-                        <span style={{
-                            color: "#a8a8a8"
-                        }}>Tabbar</span>
+                        <span className="iframe_content_tabbar">Tabbar</span>
                         <p>S2 E01 • That Open Wound</p>
                     </div>
                     <iframe src="https://www.youtube.com/embed/KLuTLF3x9sA" title="tom" allowFullScreen={true} className="iframe_container_iframe"></iframe>

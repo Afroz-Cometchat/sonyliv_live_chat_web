@@ -1,7 +1,5 @@
-.groupsListContainer {
+.groups_list_container {
     width: 30%;
-    /* width: 30vw; */
-    /* height: 88vh; */
     height: 88%;
     border-radius: 10px;
     position: absolute;
@@ -12,7 +10,15 @@
     color: #ffff;
 }
 
-.groupsListHeader {
+.group_list_wrapper{
+    height: 100%;
+}
+
+.group_list_wrapper div::-webkit-scrollbar{
+    display: none;
+}
+
+.groups_list_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,7 +26,7 @@
     padding: 10px;
 }
 
-.groupsListHeader .closeButton {
+.groups_list_header .group_list_close_button {
     background-color: transparent;
     cursor: pointer;
     border: none;
@@ -28,8 +34,8 @@
     color: #a8a8a8;
 }
 
-.groupsList {
-    height: 57vh;
+.groups_list {
+    height: 64%;
 }
 
 .group_extension_wrapper {

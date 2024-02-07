@@ -1,6 +1,5 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useState } from 'react';
 import './style.css'
-import { CometChat } from '@cometchat/chat-sdk-javascript';
 import { addCometChatReaction, addCometChatReactionLike } from './controller';
 import rightArrow from '../../assets/images/rightArrow.png'
 import flagUser from '../../assets/images/flagUser.png'
@@ -12,16 +11,11 @@ import { handleFlagUser, handleReportUser } from '../../Controllers';
 import myReactionStatus from '../../assets/images/myReactionStatus.png'
 
 function MessageBubble({ message, group, setParentMessageIdHandler }) {
-    // console.log("message bubble message", message);
     const [showReactionsOptions, setShowReactionsOptions] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [isMyReaction, setIsMyReaction] = useState(false);
     const [isActionsView, setIsActionsView] = useState(false);
-    const [showViewReply, setShowViewReply] = useState(false);
     const [showThreadedMessages, setShowThreadedMessages] = useState(false);
-    const [replyCount, setReplyCount] = useState(0);
-    const [reactionsCount, setReactionsCount] = useState(false);
-    const [reactionsData, setReactionsData] = useState([]);
     // toogle reaction options
     const toggleReactionsOptions = () => {
         setShowReactionsOptions(!showReactionsOptions)
@@ -47,62 +41,26 @@ function MessageBubble({ message, group, setParentMessageIdHandler }) {
     // show threaded messages
     const showViewMessages = () => {
         setShowThreadedMessages(true);
-        setShowViewReply(false);
     }
     // hide threaded messages
     const hideThreadMessages = () => {
-        setShowViewReply(true)
         setShowThreadedMessages(false)
     }
 
     // reply on thread
     const replyOnThread = () => {
-        console.log("gocha");
         setParentMessageIdHandler(message, message.sender.name)
     }
 
-    // handle thread counts to show in bubble
-    const handleThreadCounts = () => {
-        if (message.replyCount && message.replyCount > 0) {
-            setReplyCount(message.replyCount)
-            setShowViewReply(true)
-        }
-    }
-
-    useEffect(() => {
-        handleThreadCounts()
-    }, [message])
-
-
-    // [under progress]
-    useEffect(() => {
-        // let listenerId = new Date().getTime();
-        // CometChat.addMessageListener(
-        //     listenerId,
-        //     new CometChat.MessageListener({
-        //         onTextMessageReceived: message => {
-        //             if (!message.parentMessageId) {
-        //                 console.log("normal messagereceived", message);
-        //             } else {
-        //                 console.log("thread message received", message)
-        //                 setTimeout(() => {
-        //                     handleThreadCounts();
-        //                 }, 1000)
-        //             }
-        //         }
-        //     })
-        // );
-    }, [])
-
     return (
-        <div className="messageBubbleMainContainer" key={message.id}>
-            <div className="groupAvatarContainer">
+        <div className="message_bubble_main_container" key={message.id}>
+            <div className="group_avatar_container">
                 <img src={message.sender.avatar} alt="" />
             </div>
-            <div className="bubbleContentConatainer">
+            <div className="bubble_content_container">
                 {/* bubble text message view */}
-                <div className="bubbleTextContainer">
-                    <span> <span className='bubbleSenderName'>{message.sender.name} :</span>  {message.text}</span>
+                <div className="bubble_text_container">
+                    <span> <span className='bubble_sender_name'>{message.sender.name} :</span>  {message.text}</span>
                     <span className='verticalNavDots cursorPointer' onClick={toogleViewActions}>⋮</span>
                     {isActionsView && <div className="actionsContainer">
                         <div className="reportUserContainer" onClick={() => handleReportUser(message.sender.uid)}>
@@ -136,25 +94,24 @@ function MessageBubble({ message, group, setParentMessageIdHandler }) {
                         <span className="replyMessage cursorPointer" onClick={replyOnThread}>Reply</span>
                     </div>
                     <div className="bubbleReactionsCount">
-                        <MessageBubbleReactionsView message={message} setReactionsCount={setReactionsCount} setReactionsData={setReactionsData} setIsLiked={setIsLiked} reactionsData={reactionsData} reactionsCount={reactionsCount} setIsMyReaction={setIsMyReaction} />
+                        <MessageBubbleReactionsView message={message} setIsLiked={setIsLiked} setIsMyReaction={setIsMyReaction} />
                     </div>
                 </div>
                 {/* bubble thread messages section */}
-                {showViewReply &&
+                {(message.replyCount && !showThreadedMessages) &&
                     <div className="threadMessaagesContainer">
-                        <span className='viewMessageText' onClick={showViewMessages}> <span className='lineBeforeViewReply'></span> View {replyCount} {replyCount > 1 ? 'Replies' : 'Reply'}</span>
+                        <span className='viewMessageText' onClick={showViewMessages}> <span className='lineBeforeViewReply'></span> View {message.replyCount} {message.replyCount > 1 ? 'Replies' : 'Reply'}</span>
                     </div>
                 }
                 {
-                    message.id % 3 == 0 ? <img src={sonylivadd} alt="sonyliv add" className='addvertisement' /> : null
+                    (message.id % 3 === 0 && !message.parentMessageId) ? <img src={sonylivadd} alt="sonyliv add" className='addvertisement' /> : null
                 }
                 {
                     showThreadedMessages ?
                         <div className="threadedMessagesListContainer">
-                            {/* <ThreadMessageList message={message} group={group} /> */}
                             <ThreadMessageList message={message} group={group} setParentMessageIdHandler={setParentMessageIdHandler} />
                             <div className="threadMessaagesContainer">
-                                <span className='viewMessageText' onClick={hideThreadMessages}> <span className='lineBeforeViewReply'></span> Hide {replyCount} {replyCount > 1 ? 'Replies' : 'Reply'}</span>
+                                <span className='viewMessageText' onClick={hideThreadMessages}> <span className='lineBeforeViewReply'></span> Hide {message.replyCount} {message.replyCount > 1 ? 'Replies' : 'Reply'}</span>
                             </div>
                         </div> : null
                 }

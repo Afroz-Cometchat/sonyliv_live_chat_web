@@ -1,18 +1,24 @@
 import { CometChatUIKit } from "@cometchat/chat-uikit-react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
-const MessageBubbleReactionsView = ({ message, setReactionsCount, setReactionsData, setIsLiked, reactionsData, reactionsCount, setIsMyReaction }) => {
+const MessageBubbleReactionsView = ({ message, setIsLiked, setIsMyReaction }) => {
+    const [reactionsCount, setReactionsCount] = useState(false);
+    const [reactionsData, setReactionsData] = useState([]);
     useEffect(() => {
         CometChatUIKit.getLoggedinUser().then((user) => {
             if (message.metadata?.['@injected']?.extensions?.reactions) {
                 let reactionsDataTemp = Object.keys(message.metadata['@injected']?.extensions?.reactions)
                 let count = 0
-                // console.log(message.metadata?.['@injected']?.extensions?.reactions)
+                let myReactionFlag = true;
                 for (let k in message.metadata?.['@injected']?.extensions?.reactions) {
                     let myCount = Object.keys(message.metadata?.['@injected']?.extensions?.reactions[k]);
                     count += myCount.length
-                    if (myCount.includes(user.name)) setIsMyReaction('$')
+                    if (myCount.includes(user.name)) {
+                        setIsMyReaction(true);
+                        myReactionFlag = false
+                    }
                 }
+                if (myReactionFlag) setIsMyReaction(false)
                 setReactionsCount(count)
                 setReactionsData(reactionsDataTemp)
                 let flag = true;

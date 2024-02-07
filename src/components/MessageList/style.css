@@ -3,19 +3,19 @@
     padding: 0;
 }
 
-.messageListContainer {
+.message_list_container {
     width: 100%;
-    height: 83vh;
+    height: 94%;
     display: flex;
     flex-direction: column;
 }
 
-.backButton img {
+.back_button img {
     width: 20px;
     height: 20px;
 }
 
-.messageListHeader {
+.message_list_header {
     margin: 4px 0;
     height: 7%;
     padding: 8px;
@@ -25,30 +25,30 @@
     background-color: rgb(44, 44, 44);
 }
 
-.backButton {
+.back_button {
     cursor: pointer;
 }
 
-.messageListHeader>p {
+.message_list_header>p {
     font-size: 12px;
     max-height: 40px;
     overflow: hidden;
     white-space: wrap;
 }
 
-.messageListContainer .messageList {
+.message_list_container .messageList {
     /* max-height: 28%; */
     width: 100%;
 }
 
-.groupIcon {
+.group_icon {
     width: 40px;
     height: 40px;
     object-fit: cover;
     border-radius: 50%;
 }
 
-.messageListComposerContainer {
+.message_list_composer_container {
     /* height: 20px; */
     justify-content: center;
     align-items: center;
@@ -63,14 +63,14 @@
     align-items: center; */
 }
 
-.messageListComposerContainer form {
+.message_list_composer_container form {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
 
-.messageListComposerContainer .messageListComposer {
+.message_list_composer_container .message_list_composer {
     display: flex;
     background-color: rgb(44, 44, 44);
     width: 90%;
@@ -81,11 +81,11 @@
     box-sizing: border-box;
 }
 
-.messageListComposerInputContainer{
+.message_list_composer_input_container{
     width: 100%;
 }
 
-.messageListComposerContainer .messageListComposer input {
+.message_list_composer_container .message_list_composer input {
     background-color: transparent;
     border: none;
     outline: none;
@@ -95,11 +95,11 @@
     width: 90%;
 }
 
-.messageListComposerContainer .messageListComposer input::placeholder {
+.message_list_composer_container .message_list_composer input::placeholder {
     color: #a8a8a8;
 }
 
-.messageListComposerContainer button {
+.message_list_composer_container button {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -128,16 +128,16 @@
     margin-right: 7px;
 }
 
-.sendButtonIcon {
+.send_button_icon {
     width: 35px;
     height: 35px;
     object-fit: cover;
 }
 
-.laughEmoji{
+.laugh_emoji{
     cursor: pointer;
 }
 
-.emojiKeyboardContainer{
+.emoji_keyboard_container{
     padding: 10px 30px;
 }

@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import fireHeart from '../../../assets/images/fireHeart.png'
 import SMILING_FACE_WITH_HEART_SHAPED_EYES from '../../../assets/images/SMILING-FACE-WITH_HEART-SHAPED-EYES.png'
 import pouting from '../../../assets/images/pouting.png'
@@ -9,15 +9,7 @@ import crying_face from '../../../assets/images/Crying_Face.png'
 import fire_emoji from '../../../assets/images/fireHeart.png'
 import solylivhearticon from '../../../assets/images/solylivhearticon.png'
 
-// ######
 import { CometChat } from '@cometchat/chat-sdk-javascript';
-
-
-// export const CometChatLiveReactionView = memo((props) => (
-//     props.showReactions
-//         ? <cometchat-live-reaction reactionIconURL={props.reactionURL} />
-//         : null
-// ));
 
 
 export const CometChatLiveReactionView = ({ joinedGroup }) => {
@@ -38,21 +30,18 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
         let receiverType = CometChat.RECEIVER_TYPE.GROUP;
         timer.current = setTimeout(() => {
             setShowReactions(true)
-            // const data = { type: "reaction", reactionURL: "https://emojiisland.com/cdn/shop/products/Emoji_Icon_-_Sunglasses_cool_emoji_large.png?v=1571606093" };
             let data = { "LIVE_REACTION": "heart" };
-            // CometChat.getLoggedinUser().then((user) => {
             let transientMessage = new CometChat.TransientMessage(receiverId, receiverType, data)
             CometChat.sendTransientMessage(transientMessage);
-            // })
             setTimeout(() => {
                 setShowReactions(false)
             }, 1500);
             timer.current = null;
         }, 250);
+        setShowLiveReactionOptions(false)
     }
     // handle other live reactions click
     const sendOtherLiveReaction = (reaction, reactionName) => {
-        console.log("&&&&&&&&&&&&&&&");
         setReactionURL(reaction)
         setTimeout(() => {
             setShowReactions(true)
@@ -61,11 +50,9 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
             }, 1500);
         }, 250);
         setShowLiveReactionOptions(false)
-        // send         setReactionURL(solylivhearticon)
         let receiverId = "supergroup";
         let receiverType = CometChat.RECEIVER_TYPE.GROUP;
         let data = { "LIVE_REACTION": reactionName };
-        // CometChat.getLoggedinUser().then((user) => {
         let transientMessage = new CometChat.TransientMessage(receiverId, receiverType, data)
         CometChat.sendTransientMessage(transientMessage);
     }
@@ -82,11 +69,9 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
             listenerId,
             new CometChat.MessageListener({
                 onTransientMessageReceived: transientMessage => {
-                    console.log('transient message received', transientMessage);
                     if (transientMessage.data.LIVE_REACTION === "heart") {
                         setReactionURL(solylivhearticon)
                     } else if (transientMessage.data.LIVE_REACTION === "SMILING_FACE_WITH_HEART_SHAPED_EYES") {
-                        console.log("this is smiling face reaction");
                         setReactionURL(SMILING_FACE_WITH_HEART_SHAPED_EYES)
                     } else if (transientMessage.data.LIVE_REACTION === "pouting") {
                         setReactionURL(pouting)
@@ -109,10 +94,7 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
                             setShowReactions(false)
                         }, 1500);
                     }, 250);
-                },
-                onCustomMessageReceived: customMessage => {
-                    console.log("Custom message received successfully", customMessage);
-                },
+                }
             })
         );
     }, [joinedGroup])
@@ -120,7 +102,7 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
     return (
         <>
             {joinedGroup ? <></> :
-                <div className='live_reaction_container'>
+                <div className='live_reaction_container' onMouseOver={handleDoubleClick} onMouseOut={() => setShowLiveReactionOptions(false)}>
                     {showLiveReactionOptions && <div className='other_live_reaction_container'>
                         <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(SMILING_FACE_WITH_HEART_SHAPED_EYES, "SMILING_FACE_WITH_HEART_SHAPED_EYES")}>&#128525;</span>
                         <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(pouting, "pouting")}>&#128545;</span>
@@ -137,14 +119,11 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
                             alt=""
                             onClick={() => sendLiveReaction()}
                             className='main_live_emoji'
-                            onDoubleClick={handleDoubleClick} />
+                            />
                     </span>
-                    {/* <cometchat-live-reaction reactionIconURL={solylivhearticon} /> */}
                 </div>
             }
             {showReactions ? <cometchat-live-reaction reactionIconURL={reactionURL} /> : <></>}
         </>
     )
 }
-
-// Inside your parent 

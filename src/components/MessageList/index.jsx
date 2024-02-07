@@ -37,7 +37,8 @@ function MessageList(props) {
         templates: customMessageTheme,
         showAvatar: false,
         messagesRequestBuilder,
-        hideDateSeparator: true
+        hideDateSeparator: true,
+        scrollToBottomOnNewMessages: false
     })
 
 
@@ -98,7 +99,7 @@ function MessageList(props) {
 
     useEffect(() => {
         handleThemes()
-    }, [])
+    }, [props.joinedGroup])
 
     // cometchatmessages props
     const cometChatMessagesProps = {

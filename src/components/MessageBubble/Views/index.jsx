@@ -12,11 +12,12 @@ const MessageBubbleReactionsView = ({ message, setIsLiked, setIsMyReaction }) =>
                 let myReactionFlag = true;
                 for (let k in message.metadata?.['@injected']?.extensions?.reactions) {
                     let myCount = Object.keys(message.metadata?.['@injected']?.extensions?.reactions[k]);
-                    if(k==='🛵') continue;
-                    count += myCount.length
-                    if (myCount.includes(user.name)) {
-                        setIsMyReaction(true);
-                        myReactionFlag = false
+                    if (k !== '🛵') {
+                        count += myCount.length
+                        if (myCount.includes(user.name)) {
+                            setIsMyReaction(true);
+                            myReactionFlag = false
+                        }
                     }
                 }
                 if (myReactionFlag) setIsMyReaction(false)
@@ -28,7 +29,7 @@ const MessageBubbleReactionsView = ({ message, setIsLiked, setIsMyReaction }) =>
                         if (k === '🛵')
                             for (let j in message.metadata?.['@injected']?.extensions?.reactions[k]) {
                                 if (j === user.name) {
-                                    setReactionsCount(reactionsCount - 1)
+                                    // setReactionsCount(reactionsCount - 1)
                                     setIsLiked(true)
                                     flag = false
                                     return;

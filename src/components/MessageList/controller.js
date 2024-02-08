@@ -3,6 +3,7 @@ import { CometChatUIKit } from "@cometchat/chat-uikit-react";
 
 // handle send text message in group
 const sendTextMessage = async ({ props, textMessage, setTextMessage, threadParentMessageId, setThreadParentMessageId }) => {
+    if (textMessage === '') return;
     let cometchatTextMessage = new CometChat.TextMessage(
         props.joinedGroup.guid,
         textMessage,

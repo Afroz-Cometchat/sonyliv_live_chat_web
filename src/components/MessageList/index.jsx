@@ -6,6 +6,7 @@ import './style.css'
 import MessageListHeader from "./Views/MessageListHeader.jsx";
 import MessageListComposer from "./Views/MessageListComposer.jsx";
 import ExtensionPollBubble from "../ExtensionPollBubble/index.jsx";
+import CreatePollView from "../CreatePollView/CreatePollView.jsx";
 
 function MessageList(props) {
     // handle textMessage state

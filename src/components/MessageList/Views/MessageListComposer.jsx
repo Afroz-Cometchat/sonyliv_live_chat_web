@@ -2,10 +2,41 @@ import { sendTextMessage } from "../controller";
 import sendbutton from '../../../assets/images/sendbutton.png'
 import { useState } from "react";
 import CometChatEmojiKeyboardView from "./CometChatEmojiKeyboardView";
+import CreatePollView from "../../CreatePollView/CreatePollView";
 
 function MessageListComposer({ props, textMessage, setTextMessage, threadParentMessageId, setIsEmojiKeyboard, setEmojiKeyboardHeight, emojiKeyboardHeight, setThreadParentMessageId }) {
     // handle to get cometchat emoji keyboad on emoji button click
     const [getCometChatEmojiKeyboard, setCometChatEmojiKeyboard] = useState(false);
+    // handle show cerate poll 
+    const [isCreatePoll, setIsCreatePoll] = useState(false);
+
+    // toogle create poll
+    const toogle_create_poll = () => {
+        setIsCreatePoll(!isCreatePoll)
+    }
+
+    // create poll syles
+    const createPollStyle = {
+        placeholderTextColor: "#ffff",
+        deleteIconTint: "#ffff",
+        closeIconTint: "#ffff",
+        questionInputBackground: "#3e3e3e",
+        optionInputBackground: "#3e3e3e",
+        addAnswerIconTint: "#ffff",
+        createPollButtonTextFont: "16px",
+        createPollButtonTextColor: "#ffff",
+        createPollButtonBackground: "#000",
+        addAnswerTextColor: "#ffff",
+        optionPlaceholderTextColor: "#ffff",
+        questionInputTextColor: "#ffff",
+        optionInputTextColor: "#ffff",
+        background: "rgb(44, 44, 44)",
+        height: "62vh",
+        width: "100%",
+        border: "1px solid #a8a8a8",
+        borderRadius: '12px'
+    }
+
 
     // send new message normal or in thread both 
     const cometChatsendTextMessage = async (e) => {
@@ -54,6 +85,7 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
                         <div className="message_list_composer_input_container">
                             <span className="laugh_emoji" onClick={toogleCometChatEmojiKeyboard}>😝</span>
                             <input type="text" placeholder="Add a comment" value={textMessage} onChange={(e) => handleTexMessage(e)} />
+                            <span className="toogle_create_poll cursorPointer" onClick={toogle_create_poll}>⋮</span>
                         </div>
                     </div>
                     <button type="submit"><img src={sendbutton} alt="" className="send_button_icon" /></button>
@@ -65,6 +97,11 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
                     <CometChatEmojiKeyboardView emojiKeyboardStyle={keyboardStyle} ccEmojiClicked={ccEmojiClicked} />
                 </div>
             }
+            {isCreatePoll && <CreatePollView
+                group={props.joinedGroup}
+                ccCloseClicked={() => setIsCreatePoll(false)}
+                createPollStyle={createPollStyle}
+            />}
         </div>
     )
 }

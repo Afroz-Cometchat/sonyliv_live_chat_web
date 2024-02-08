@@ -75,6 +75,7 @@
 
 .message_list_composer_input_container{
     width: 100%;
+    position: relative;
 }
 
 .message_list_composer_container .message_list_composer input {
@@ -132,4 +133,10 @@
 
 .emoji_keyboard_container{
     padding: 10px 30px;
+}
+
+.toogle_create_poll{
+    position: absolute;
+    top: 0;
+    right: 0;
 }

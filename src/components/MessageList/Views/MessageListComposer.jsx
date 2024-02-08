@@ -1,6 +1,6 @@
 import { sendTextMessage } from "../controller";
 import sendbutton from '../../../assets/images/sendbutton.png'
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CometChatEmojiKeyboardView from "./CometChatEmojiKeyboardView";
 import CreatePollView from "../../CreatePollView/CreatePollView";
 
@@ -9,6 +9,7 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
     const [getCometChatEmojiKeyboard, setCometChatEmojiKeyboard] = useState(false);
     // handle show cerate poll 
     const [isCreatePoll, setIsCreatePoll] = useState(false);
+    const inputRef = useRef(null);
 
     // toogle create poll
     const toogle_create_poll = () => {
@@ -77,6 +78,10 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
         setTextMessage(textMessage + selectedEmoji)
     }
 
+    useEffect(() => {
+        inputRef.current.focus();
+    }, [textMessage])
+
     return (
         <div className="message_list_composer_container">
             <div className="composer_form_container">
@@ -84,7 +89,7 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
                     <div className="message_list_composer">
                         <div className="message_list_composer_input_container">
                             <span className="laugh_emoji" onClick={toogleCometChatEmojiKeyboard}>😝</span>
-                            <input type="text" placeholder="Add a comment" value={textMessage} onChange={(e) => handleTexMessage(e)} />
+                            <input ref={inputRef} type="text" placeholder="Add a comment" value={textMessage} onChange={(e) => handleTexMessage(e)} autoFocus />
                             <span className="toogle_create_poll cursorPointer" onClick={toogle_create_poll}>⋮</span>
                         </div>
                     </div>

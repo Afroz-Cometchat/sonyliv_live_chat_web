@@ -27,11 +27,15 @@ export default function Home() {
                         <span className="iframe_content_tabbar">Tabbar</span>
                         <p>S2 E01 • That Open Wound</p>
                     </div>
-                    <iframe src="https://www.youtube.com/embed/KLuTLF3x9sA" title="tom" allowFullScreen={true} className="iframe_container_iframe"></iframe>
+                    <iframe src="https://www.youtube.com/embed/67qlB5y5wCQ" title="tom" allowFullScreen={true} className="iframe_container_iframe"></iframe>
+                    <div className="show_live_chat_button_wrapper">
+                        <button onClick={() => setShowChat(true)} className="home_container_livechat_button">
+                            <img src={liveChatIcon} alt="" className="live_chat_icon" />
+                            Live Chat
+                        </button>
+                    </div>
                 </div>
             </div>
-            <button onClick={() => setShowChat(true)} className="home_container_livechat_button">
-                <img src={liveChatIcon} alt="" className="live_chat_icon" />  Live Chat</button>
             {show_chat && <GroupsList {...props} />}
         </div>
     )

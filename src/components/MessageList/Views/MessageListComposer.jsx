@@ -9,6 +9,7 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
     const [getCometChatEmojiKeyboard, setCometChatEmojiKeyboard] = useState(false);
     // handle show cerate poll 
     const [isCreatePoll, setIsCreatePoll] = useState(false);
+    // handle to auto focus on composer input box after clickin on reaply button
     const inputRef = useRef(null);
 
     // toogle create poll
@@ -16,7 +17,7 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
         setIsCreatePoll(!isCreatePoll)
     }
 
-    // create poll syles
+    // set poll syles
     const createPollStyle = {
         placeholderTextColor: "#ffff",
         deleteIconTint: "#ffff",
@@ -48,11 +49,10 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
         setIsEmojiKeyboard(false);
     }
 
-    // set text message and remove parentid if its deleted from the input box
+    // set text message and remove parentid if tag is removed from the composer input box
     const handleTexMessage = (e) => {
         setTextMessage(e.target.value)
         if (e.target.value === '') {
-            // setParentMessageIdHandler(false, '')
             setThreadParentMessageId(false)
         }
     }
@@ -97,16 +97,20 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
                 </form>
             </div>
             {
+                // handle to show emoji keyboard
                 getCometChatEmojiKeyboard &&
                 <div className="emoji_keyboard_container">
                     <CometChatEmojiKeyboardView emojiKeyboardStyle={keyboardStyle} ccEmojiClicked={ccEmojiClicked} />
                 </div>
             }
-            {isCreatePoll && <CreatePollView
-                group={props.joinedGroup}
-                ccCloseClicked={() => setIsCreatePoll(false)}
-                createPollStyle={createPollStyle}
-            />}
+            {
+                // render poll creations 
+                isCreatePoll && <CreatePollView
+                    group={props.joinedGroup}
+                    ccCloseClicked={() => setIsCreatePoll(false)}
+                    createPollStyle={createPollStyle}
+                />
+            }
         </div>
     )
 }

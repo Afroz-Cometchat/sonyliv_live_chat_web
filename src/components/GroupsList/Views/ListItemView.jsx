@@ -4,10 +4,12 @@ import sonylivadd from '../../../assets/images/sonylivadd.png'
 const ListItemView = ({ group, joinGroupHandler }) => {
     return (
         <>
+            {/* generating random width for each group list item, can be changed */}
             <div className="groupListItem" style={{
                 width: `${Math.floor(Math.random() * 21) + 60}%`
             }}>
                 <div className="groupIconContainer">
+                    {/* cometchat avatar to show group avatar/icon */}
                     <AvatarView image={group.icon}
                         name={group.name}
                         avatarStyle={JSON.stringify({
@@ -24,8 +26,8 @@ const ListItemView = ({ group, joinGroupHandler }) => {
                             border: "none"
                         })}
                     />
-                    {/* <CometCHatAva */}
                 </div>
+                {/* group details */}
                 <div className="groupDescriptionBox">
                     <span className='gpoupName'>#{group.name}</span>
                     <p className='groupDescriptionText'> {group.description} </p>
@@ -38,6 +40,7 @@ const ListItemView = ({ group, joinGroupHandler }) => {
                 </div>
             </div>
             {
+                // render adds, randomly inside groups list, can be changed 
                 (Math.floor(Math.random() * 10) + 1) % 2 === 0 ? <img src={sonylivadd} alt="sonyliv add" className='addvertisement' id="addvertisement" /> : null
             }
         </>

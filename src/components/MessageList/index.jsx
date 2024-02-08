@@ -6,7 +6,6 @@ import './style.css'
 import MessageListHeader from "./Views/MessageListHeader.jsx";
 import MessageListComposer from "./Views/MessageListComposer.jsx";
 import ExtensionPollBubble from "../ExtensionPollBubble/index.jsx";
-import CreatePollView from "../CreatePollView/CreatePollView.jsx";
 
 function MessageList(props) {
     // handle textMessage state
@@ -43,7 +42,7 @@ function MessageList(props) {
     })
 
 
-    // render custom message bubble
+    // get custom message bubble
     const getBubbleView = (message) => {
         return (
             <>
@@ -58,6 +57,7 @@ function MessageList(props) {
         setTextMessage(username ? `@${username}` : '');
     }
 
+    // set custom extension_polls
     const getPollsView = (message) => {
         return (
             <ExtensionPollBubble message={message} />
@@ -81,6 +81,7 @@ function MessageList(props) {
                     options: () => []
                 })
             } else if (message.category === 'custom' && message.type === "extension_poll") {
+                // change bubble view for custom extension polls
                 return new CometChatMessageTemplate({
                     type: 'extension_poll',
                     category: 'custom',

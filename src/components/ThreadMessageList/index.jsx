@@ -1,9 +1,8 @@
 import { CometChatMessageList, CometChatMessageTemplate, CometChatUIKit, MessageListStyle } from "@cometchat/chat-uikit-react";
-// import '../../assets/css/messageList.css'
 import { useEffect, useState } from "react";
 import { CometChat } from "@cometchat/chat-sdk-javascript";
-// import MessageBubble from "../MessageBubble/index";
 import './style.css'
+// using the same message bubble for message list and thead message list 
 import MessageBubble from "../MessageBubble";
 
 function ThreadMessageList(props) {

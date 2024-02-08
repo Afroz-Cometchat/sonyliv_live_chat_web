@@ -12,12 +12,18 @@ import myReactionStatus from '../../assets/images/myReactionStatus.png'
 import AvatarView from '../AvatarView';
 
 function MessageBubble({ message, group, setParentMessageIdHandler }) {
+    // handle to show reactions options or not 
     const [showReactionsOptions, setShowReactionsOptions] = useState(false);
+    // handle if message is liked by the user
     const [isLiked, setIsLiked] = useState(false);
+    // handle if user already reacted 
     const [isMyReaction, setIsMyReaction] = useState(false);
+    // handle actions view, ********************* can be changed
     const [isActionsView, setIsActionsView] = useState(false);
+    // handle to show thread message or not
     const [showThreadedMessages, setShowThreadedMessages] = useState(false);
-    // toogle reaction options
+
+    // toogle reaction options view
     const toggleReactionsOptions = () => {
         setShowReactionsOptions(!showReactionsOptions)
     }
@@ -27,14 +33,14 @@ function MessageBubble({ message, group, setParentMessageIdHandler }) {
         addCometChatReaction(reaction, message.id, toggleReactionsOptions)
     }
 
-    // add like reaction
+    // hande like message
     const addReactionLike = () => {
         addCometChatReactionLike(message.id)
         if (showReactionsOptions === true) setShowReactionsOptions(false)
 
     }
 
-    // toogle view actions view
+    // toogle actions view
     const toogleViewActions = () => {
         setIsActionsView(!isActionsView)
     }
@@ -55,9 +61,8 @@ function MessageBubble({ message, group, setParentMessageIdHandler }) {
 
     return (
         <div className="message_bubble_main_container" key={message.id}>
+            {/* user avatar */}
             <div className="group_avatar_container">
-                {/* <img src={message.sender.avatar} alt="" /> */}
-                {/* <cometchat-avatar image={message.sender.avatar} name={message.sender.name} /> */}
                 <AvatarView image={message.sender.avatar}
                     name={message.sender.name}
                     avatarStyle={JSON.stringify({

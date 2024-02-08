@@ -18,8 +18,11 @@ export default function Home() {
     }
 
     return (
+        // main home containier
         <div className="home__container">
+            {/* iframe wrapper  */}
             <div className="home_iframe_wrapper">
+                {/* set width of iframe(live streaming) 67% if live chat is open or else 100% */}
                 <div style={{
                     width: `${show_chat ? "67%" : "100%"}`,
                 }} className="home_container_iframe_container">
@@ -27,6 +30,7 @@ export default function Home() {
                         <span className="iframe_content_tabbar">Tabbar</span>
                         <p>S2 E01 • That Open Wound</p>
                     </div>
+                    {/* iframe to show live streamings */}
                     <iframe src="https://www.youtube.com/embed/67qlB5y5wCQ" title="tom" allowFullScreen={true} className="iframe_container_iframe"></iframe>
                     <div className="show_live_chat_button_wrapper">
                         <button onClick={() => setShowChat(true)} className="home_container_livechat_button">
@@ -36,6 +40,7 @@ export default function Home() {
                     </div>
                 </div>
             </div>
+            {/* render live chats */}
             {show_chat && <GroupsList {...props} />}
         </div>
     )

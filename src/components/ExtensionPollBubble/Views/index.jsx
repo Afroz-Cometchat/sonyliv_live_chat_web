@@ -25,7 +25,6 @@ const PollOptionWraper = ({ message, sendVote, ele, myVote, pollData, pollResult
                         <div className="voter_image_wraper">
                             {
                                 getVoterAvatars(pollResults, ele).map(({ avatar, name }) => <span>
-                                    {/* <img src={avatar} alt="" className="voter_image" /> */}
                                     <span>
                                         <AvatarView image={avatar}
                                             name={name}

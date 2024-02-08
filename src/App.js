@@ -5,7 +5,7 @@ import Nav from './components/Navigation/index';
 function App() {
   return (
     <div className="App">
-      {/* render navigation baat */}
+      {/* render navigation */}
       <Nav />
       {/* render home page */}
       <Home />

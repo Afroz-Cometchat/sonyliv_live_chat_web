@@ -11,7 +11,7 @@ function GroupsList(props) {
     // handle to render cometchatgrouplist or cometchatmessaglist
     const [joinedGroup, setJoinedGroup] = useState(null);
 
-    // set custom group list view
+    // get custom group lists view
     const listItemView = (group) => {
         return ListItemView({ group, joinGroupHandler })
     }
@@ -45,23 +45,28 @@ function GroupsList(props) {
     return (
         <div className='groups_list_container'>
             <div className='group_list_wrapper'>
+                {/* header of the groups list */}
                 <div className="groups_list_header">
                     <h2>Live Chat</h2>
+                    {/* button to close live chat */}
                     <button onClick={() => props.closeChat()} className='group_list_close_button'>X</button>
                 </div>
                 {
+                    // check if user has joined a group > if yes then render that groups chats or else render groups list
                     joinedGroup ?
                         <MessageList joinedGroup={joinedGroup} closeGroup={closeGroup} />
                         :
                         <div className="groups_list">
+                            {/* render group poll, present at the top of the groups list */}
                             <div className='group_extension_wrapper'>
                                 <GroupPollView />
                             </div>
+                            {/* render groups lists */}
                             <CometChatGroups {...cometChatGroupProps} />
                         </div>
                 }
+                {/* render cometchat live animated reactions view */}
                 <CometChatLiveReactionView joinedGroup={joinedGroup} />
-
             </div>
         </div>
     )

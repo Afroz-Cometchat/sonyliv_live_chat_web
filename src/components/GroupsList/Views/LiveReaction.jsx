@@ -8,20 +8,22 @@ import thumbsup from '../../../assets/images/thumbsup.png'
 import crying_face from '../../../assets/images/Crying_Face.png'
 import fire_emoji from '../../../assets/images/fire_emoji.png'
 import solylivhearticon from '../../../assets/images/solylivhearticon.png'
-
 import { CometChat } from '@cometchat/chat-sdk-javascript';
 
 
 export const CometChatLiveReactionView = ({ joinedGroup }) => {
-    // handle animated live reactions [under progress]
+    // handle to show live reaction or not
     const [showReactions, setShowReactions] = useState(false);
-    // handle show more live reaction options or not
+    // handle to show more live reaction options or not
     const [showLiveReactionOptions, setShowLiveReactionOptions] = useState(false);
+    // timer used to delay live reaction animation 250ms, 
     const timer = useRef(null);
+    // to stop live reaction animation on new animation 
     const offLiveReaction = useRef(null);
-    // set live reaction icon url
+    // set live reaction icon
     const [reactionURL, setReactionURL] = useState('');
 
+    // send live heart reaction handler
     const sendLiveReaction = () => {
         // clear if live reaction already animating
         clearTimeout(timer.current)
@@ -29,6 +31,7 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
         clearTimeout(offLiveReaction.current);
         offLiveReaction.current = null;
         setShowReactions(false);
+        // set heart icon for live reaction
         setReactionURL(solylivhearticon)
         let receiverId = "supergroup";
         let receiverType = CometChat.RECEIVER_TYPE.GROUP;
@@ -39,18 +42,23 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
             }, 1500);
             timer.current = null;
         }, 250);
+        // close other live reaction options
         setShowLiveReactionOptions(false)
+
+        // send live heart reaction to others
         let data = { "LIVE_REACTION": "heart" };
         let transientMessage = new CometChat.TransientMessage(receiverId, receiverType, data)
         CometChat.sendTransientMessage(transientMessage);
     }
-    // handle other live reactions click
+
+    // handle other live reactions (other than heart)
     const sendOtherLiveReaction = (reaction, reactionName) => {
         // clear if live reaction already animating
         clearTimeout(timer.current)
         timer.current = null;
         clearTimeout(offLiveReaction.current);
         offLiveReaction.current = null;
+        // set reaction icon
         setReactionURL(reaction)
         timer.current = setTimeout(() => {
             setShowReactions(true)
@@ -58,7 +66,10 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
                 setShowReactions(false)
             }, 1500);
         }, 250);
+        // close other live reaction options
         setShowLiveReactionOptions(false)
+
+        // send live reaction to others
         let receiverId = "supergroup";
         let receiverType = CometChat.RECEIVER_TYPE.GROUP;
         let data = { "LIVE_REACTION": reactionName };
@@ -66,6 +77,7 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
         CometChat.sendTransientMessage(transientMessage);
     }
 
+    // handle hover on live reaction icon, open other reactions options
     const handleReactionHover = () => {
         clearTimeout(timer.current);
         timer.current = null;
@@ -73,6 +85,7 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
     }
 
     useEffect(() => {
+        // cometchat listner to listen new live reactions and render on DOM
         let listenerId = new Date().getTime();
         CometChat.addMessageListener(
             listenerId,
@@ -115,6 +128,7 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
 
     return (
         <>
+        {/* render live reaction options only in groups list view */}
             {joinedGroup ? <></> :
                 <div className='live_reaction_container' onMouseOver={handleReactionHover} onMouseOut={() => setShowLiveReactionOptions(false)}>
                     {showLiveReactionOptions && <div className='other_live_reaction_container'>
@@ -137,6 +151,7 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
                     </span>
                 </div>
             }
+            {/* handle rendring live reactions */}
             {showReactions ? <cometchat-live-reaction reactionIconURL={reactionURL} /> : <></>}
         </>
     )

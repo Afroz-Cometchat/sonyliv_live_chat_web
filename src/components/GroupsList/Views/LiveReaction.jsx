@@ -17,35 +17,44 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
     const [showReactions, setShowReactions] = useState(false);
     // handle show more live reaction options or not
     const [showLiveReactionOptions, setShowLiveReactionOptions] = useState(false);
-    // to detect single or double click on live emoji reaction
     const timer = useRef(null);
-
+    const offLiveReaction = useRef(null);
     // set live reaction icon url
     const [reactionURL, setReactionURL] = useState('');
 
     const sendLiveReaction = () => {
-        if (timer.current !== null) return;
+        // clear if live reaction already animating
+        clearTimeout(timer.current)
+        timer.current = null;
+        clearTimeout(offLiveReaction.current);
+        offLiveReaction.current = null;
+        setShowReactions(false);
         setReactionURL(solylivhearticon)
         let receiverId = "supergroup";
         let receiverType = CometChat.RECEIVER_TYPE.GROUP;
         timer.current = setTimeout(() => {
             setShowReactions(true)
-            let data = { "LIVE_REACTION": "heart" };
-            let transientMessage = new CometChat.TransientMessage(receiverId, receiverType, data)
-            CometChat.sendTransientMessage(transientMessage);
-            setTimeout(() => {
+            offLiveReaction.current = setTimeout(() => {
                 setShowReactions(false)
             }, 1500);
             timer.current = null;
         }, 250);
         setShowLiveReactionOptions(false)
+        let data = { "LIVE_REACTION": "heart" };
+        let transientMessage = new CometChat.TransientMessage(receiverId, receiverType, data)
+        CometChat.sendTransientMessage(transientMessage);
     }
     // handle other live reactions click
     const sendOtherLiveReaction = (reaction, reactionName) => {
+        // clear if live reaction already animating
+        clearTimeout(timer.current)
+        timer.current = null;
+        clearTimeout(offLiveReaction.current);
+        offLiveReaction.current = null;
         setReactionURL(reaction)
-        setTimeout(() => {
+        timer.current = setTimeout(() => {
             setShowReactions(true)
-            setTimeout(() => {
+            offLiveReaction.current = setTimeout(() => {
                 setShowReactions(false)
             }, 1500);
         }, 250);
@@ -57,7 +66,7 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
         CometChat.sendTransientMessage(transientMessage);
     }
 
-    const handleDoubleClick = () => {
+    const handleReactionHover = () => {
         clearTimeout(timer.current);
         timer.current = null;
         setShowLiveReactionOptions(true);
@@ -88,9 +97,14 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
                     } else if (transientMessage.data.LIVE_REACTION === "fire_emoji") {
                         setReactionURL(fire_emoji)
                     }
-                    setTimeout(() => {
+                    // clear if live reaction already animating
+                    clearTimeout(timer.current)
+                    timer.current = null;
+                    clearTimeout(offLiveReaction.current);
+                    offLiveReaction.current = null;
+                    timer.current = setTimeout(() => {
                         setShowReactions(true)
-                        setTimeout(() => {
+                        offLiveReaction.current = setTimeout(() => {
                             setShowReactions(false)
                         }, 1500);
                     }, 250);
@@ -102,7 +116,7 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
     return (
         <>
             {joinedGroup ? <></> :
-                <div className='live_reaction_container' onMouseOver={handleDoubleClick} onMouseOut={() => setShowLiveReactionOptions(false)}>
+                <div className='live_reaction_container' onMouseOver={handleReactionHover} onMouseOut={() => setShowLiveReactionOptions(false)}>
                     {showLiveReactionOptions && <div className='other_live_reaction_container'>
                         <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(SMILING_FACE_WITH_HEART_SHAPED_EYES, "SMILING_FACE_WITH_HEART_SHAPED_EYES")}>&#128525;</span>
                         <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(pouting, "pouting")}>&#128545;</span>

@@ -8,7 +8,6 @@ import COMETCHAT_CONSTANTS from './CONSTS';
 
 
 (() => {
-  let userToken = prompt('Enter user AuthToken')
   const UIKitSettings = new UIKitSettingsBuilder()
     .setAppId(COMETCHAT_CONSTANTS.APP_ID)
     .setRegion(COMETCHAT_CONSTANTS.REGION)
@@ -19,9 +18,10 @@ import COMETCHAT_CONSTANTS from './CONSTS';
   CometChatUIKit.init(UIKitSettings).then(() => {
     // You can now call login function.
     CometChatUIKit.getLoggedinUser().then(user => {
-      if(!user){
+      if (!user) {
         //Login user
-        CometChatUIKit.loginWithAuthToken(userToken).then(user => {        
+        let userToken = prompt('Enter user AuthToken')
+        CometChatUIKit.loginWithAuthToken(userToken).then(user => {
           //mount your app        
         }).catch(console.log);
       } else {
@@ -30,7 +30,7 @@ import COMETCHAT_CONSTANTS from './CONSTS';
     }).catch(console.log);
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(
-        <App />
+      <App />
     );
   }).catch(console.log);
 })()

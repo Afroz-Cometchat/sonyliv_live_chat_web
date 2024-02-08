@@ -9,14 +9,7 @@ import { MessageBubbleReactionsView } from './Views';
 import sonylivadd from '../../assets/images/sonylivadd.png'
 import { handleFlagUser, handleReportUser } from '../../Controllers';
 import myReactionStatus from '../../assets/images/myReactionStatus.png'
-import { createComponent } from '@lit/react';
-import { AvatarStyle } from '@cometchat/uikit-elements';
-
-const AvatarView = createComponent({
-    react: React,
-    elementClass: AvatarStyle,
-    tagName: "cometchat-avatar"
-})
+import AvatarView from '../AvatarView';
 
 function MessageBubble({ message, group, setParentMessageIdHandler }) {
     const [showReactionsOptions, setShowReactionsOptions] = useState(false);

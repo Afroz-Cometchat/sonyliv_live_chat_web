@@ -33,9 +33,8 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
         questionInputTextColor: "#ffff",
         optionInputTextColor: "#ffff",
         background: "rgb(44, 44, 44)",
-        height: "62vh",
         width: "100%",
-        border: "1px solid #a8a8a8",
+        // border: "1px solid #a8a8a8",
         borderRadius: '12px'
     }
 
@@ -45,7 +44,7 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
         e.preventDefault();
         sendTextMessage({ props, textMessage, setTextMessage, threadParentMessageId, setThreadParentMessageId })
         setCometChatEmojiKeyboard(false);
-        emojiKeyboardHeight('81%');
+        emojiKeyboardHeight('86%');
         setIsEmojiKeyboard(false);
     }
 
@@ -105,11 +104,13 @@ function MessageListComposer({ props, textMessage, setTextMessage, threadParentM
             }
             {
                 // render poll creations 
-                isCreatePoll && <CreatePollView
-                    group={props.joinedGroup}
-                    ccCloseClicked={() => setIsCreatePoll(false)}
-                    createPollStyle={createPollStyle}
-                />
+                isCreatePoll && <div className="create_poll_wrapper">
+                    <CreatePollView
+                        group={props.joinedGroup}
+                        ccCloseClicked={() => setIsCreatePoll(false)}
+                        createPollStyle={createPollStyle}
+                    />
+                </div>
             }
         </div>
     )

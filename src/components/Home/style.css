@@ -8,13 +8,16 @@
 }
 
 .home_container_iframe_container {
-    height: 100%;
+    max-height: 100%;
+    height: 89%;
 }
 
 .iframe_container_text_container {
     color: #fff;
     text-align: center;
-    padding: 10px 0
+    padding: 10px 0;
+    max-height: 10%;
+    height: 8%;
 }
 
 .iframe_content_tabbar{
@@ -23,15 +26,16 @@
 
 .iframe_container_iframe {
     border: none;
-    height: 88%;
+    height: 92%;
     width: 100%;
 }
 
-.show_live_chat_button_wrapper{
-    /* border: 1px solid red; */
+.show_live_chat_button_wrapper {
     padding: 4px 30px 4px 0;
     display: flex;
     justify-content: flex-end;
+    max-height: 10%;
+    height: 5%;
 }
 
 .home_container_livechat_button {

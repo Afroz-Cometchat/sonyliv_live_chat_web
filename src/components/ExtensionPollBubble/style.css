@@ -1,10 +1,11 @@
 .extension_poll_bubble_container {
     width: 100%;
-    padding: 10px;
+    padding: 5px 10px;
     border-radius: 12px;
     background-color: rgb(0, 24, 29);
     font-size: 14px;
     position: relative;
+    max-height: 100%;
 }
 
 .poll_of_the_week {
@@ -16,11 +17,14 @@
 }
 
 .poll_options_container {
-    margin: 12px 0;
+    margin: 8px 0;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .poll_option {
-    /* border: 1px solid red; */
     display: flex;
     align-items: center;
 }
@@ -34,8 +38,8 @@
 
 .poll_option_box {
     width: 94%;
-    height: 40px;
-    margin: 4px 0;
+    height: 100%;
+    margin: 2px 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;

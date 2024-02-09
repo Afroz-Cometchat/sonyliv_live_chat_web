@@ -17,7 +17,7 @@ function MessageList(props) {
     // handle to show cometchat emoji keyboard or not
     const [isEmojiKeyboard, setIsEmojiKeyboard] = useState(false);
     // handle cometchat messagelist height according to the presence of cometchat emoji keyboard
-    const [getEmojiKeyboardHeight, emojiKeyboardHeight] = useState('81%')
+    const [getEmojiKeyboardHeight, emojiKeyboardHeight] = useState('86%')
 
     // messagesRequestBuilder
     let messagesRequestBuilder = new CometChat.MessagesRequestBuilder()
@@ -114,7 +114,7 @@ function MessageList(props) {
 
     // toogle cometchat mesasge list height 
     const setEmojiKeyboardHeight = () => {
-        isEmojiKeyboard ? emojiKeyboardHeight('81%') : emojiKeyboardHeight('40%')
+        isEmojiKeyboard ? emojiKeyboardHeight('86%') : emojiKeyboardHeight('40%')
         setIsEmojiKeyboard(!isEmojiKeyboard)
     }
 

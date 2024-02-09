@@ -11,9 +11,7 @@
 }
 
 .bubble_content_container {
-    /* margin-left: 10px; */
     width: 90%;
-    /* border: 1px solid lime; */
 }
 
 .bubble_text_container {
@@ -42,7 +40,6 @@
 .group_avatar_container {
     width: 30px;
     height: 30px;
-    /* border: 1px solid lime; */
 }
 
 .group_avatar_container img {
@@ -81,10 +78,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.reactionsEmojis{
-    /* border: 1px solid red; */
 }
 
 .reactionsEmojis span {

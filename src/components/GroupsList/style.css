@@ -67,6 +67,12 @@
     font-size: 12px;
 }
 
+.userIcon{
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
 .groupDescriptionBox {
     margin-left: 14px;
 }
@@ -87,6 +93,13 @@
     height: 40px;
     object-fit: cover;
     border-radius: 50%;
+}
+
+.usersCountContainer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 40px;
 }
 
 .groupMetaInfo {

@@ -1,5 +1,6 @@
 import AvatarView from "../../AvatarView";
 import sonylivadd from '../../../assets/images/sonylivadd.png'
+import userIcon from '../../../assets/images/userIcon.png'
 
 const ListItemView = ({ group, joinGroupHandler }) => {
     return (
@@ -32,9 +33,7 @@ const ListItemView = ({ group, joinGroupHandler }) => {
                     <span className='gpoupName'>#{group.name}</span>
                     <p className='groupDescriptionText'> {group.description} </p>
                     <div className="groupMetaInfo">
-                        <span>{group.membersCount}</span>
-                        <span>&#128293; <span>{Math.floor(Math.random() * 1001)}</span></span>
-                        <span className='reply'>Be the 1st to reply</span>
+                        <span className="usersCountContainer"> <span><img src={userIcon} alt="" className="userIcon" /></span> {group.membersCount}</span>
                     </div>
                     <p className='joinNowText' onClick={() => joinGroupHandler(group)}> Join now </p>
                 </div>

@@ -46,7 +46,7 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
         setShowLiveReactionOptions(false)
 
         // send live heart reaction to others
-        let data = { "LIVE_REACTION": "heart" };
+        let data = { "reaction": "heart" };
         let transientMessage = new CometChat.TransientMessage(receiverId, receiverType, data)
         CometChat.sendTransientMessage(transientMessage);
     }
@@ -72,7 +72,7 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
         // send live reaction to others
         let receiverId = "supergroup";
         let receiverType = CometChat.RECEIVER_TYPE.GROUP;
-        let data = { "LIVE_REACTION": reactionName };
+        let data = { "reaction": reactionName };
         let transientMessage = new CometChat.TransientMessage(receiverId, receiverType, data)
         CometChat.sendTransientMessage(transientMessage);
     }
@@ -91,23 +91,23 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
             listenerId,
             new CometChat.MessageListener({
                 onTransientMessageReceived: transientMessage => {
-                    if (transientMessage.data.LIVE_REACTION === "heart") {
+                    if (transientMessage.data.reaction === "heart") {
                         setReactionURL(solylivhearticon)
-                    } else if (transientMessage.data.LIVE_REACTION === "SMILING_FACE_WITH_HEART_SHAPED_EYES") {
+                    } else if (transientMessage.data.reaction === "smilingFaceWithHeartShapedEyes") {
                         setReactionURL(SMILING_FACE_WITH_HEART_SHAPED_EYES)
-                    } else if (transientMessage.data.LIVE_REACTION === "pouting") {
+                    } else if (transientMessage.data.reaction === "pouting") {
                         setReactionURL(pouting)
-                    } else if (transientMessage.data.LIVE_REACTION === "smiling_face_open_mouth") {
+                    } else if (transientMessage.data.reaction === "smilingFaceOpenMouth") {
                         setReactionURL(smiling_face_open_mouth)
-                    } else if (transientMessage.data.LIVE_REACTION === "hushed_face") {
+                    } else if (transientMessage.data.reaction === "hushedFace") {
                         setReactionURL(hushed_face)
-                    } else if (transientMessage.data.LIVE_REACTION === "fireHeart") {
+                    } else if (transientMessage.data.reaction === "fireHeart") {
                         setReactionURL(fireHeart)
-                    } else if (transientMessage.data.LIVE_REACTION === "thumbsup") {
+                    } else if (transientMessage.data.reaction === "thumbsUp") {
                         setReactionURL(thumbsup)
-                    } else if (transientMessage.data.LIVE_REACTION === "crying_face") {
+                    } else if (transientMessage.data.reaction === "cryingFace") {
                         setReactionURL(crying_face)
-                    } else if (transientMessage.data.LIVE_REACTION === "fire_emoji") {
+                    } else if (transientMessage.data.reaction === "fireEmoji") {
                         setReactionURL(fire_emoji)
                     }
                     // clear if live reaction already animating
@@ -132,14 +132,14 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
             {joinedGroup ? <></> :
                 <div className='live_reaction_container' onMouseOver={handleReactionHover} onMouseOut={() => setShowLiveReactionOptions(false)}>
                     {showLiveReactionOptions && <div className='other_live_reaction_container'>
-                        <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(SMILING_FACE_WITH_HEART_SHAPED_EYES, "SMILING_FACE_WITH_HEART_SHAPED_EYES")}>&#128525;</span>
+                        <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(SMILING_FACE_WITH_HEART_SHAPED_EYES, "smilingFaceWithHeartShapedEyes")}>&#128525;</span>
                         <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(pouting, "pouting")}>&#128545;</span>
-                        <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(smiling_face_open_mouth, "smiling_face_open_mouth")}>&#128518;</span>
-                        <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(hushed_face, "hushed_face")}>&#128559;</span>
+                        <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(smiling_face_open_mouth, "smilingFaceOpenMouth")}>&#128518;</span>
+                        <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(hushed_face, "hushedFace")}>&#128559;</span>
                         <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(fireHeart, "fireHeart")}><img src={fireHeart} alt="" /></span>
-                        <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(thumbsup, "thumbsup")}>&#128077;</span>
-                        <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(crying_face, "crying_face")}>&#128546;</span>
-                        <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(fire_emoji, "fire_emoji")}>&#128293;</span>
+                        <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(thumbsup, "thumbsUp")}>&#128077;</span>
+                        <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(crying_face, "cryingFace")}>&#128546;</span>
+                        <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(fire_emoji, "fireEmoji")}>&#128293;</span>
                     </div>}
                     <span className='live_reaction_emoji heart_reaction_emoji'>
                         <img

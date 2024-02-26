@@ -17,17 +17,17 @@ import COMETCHAT_CONSTANTS from './CONSTS';
   //Initialize CometChat UIKit
   CometChatUIKit.init(UIKitSettings).then(() => {
     // You can now call login function.
-    CometChatUIKit.getLoggedinUser().then(user => {
-      if (!user) {
-        //Login user
-        let userToken = prompt('Enter user AuthToken')
-        CometChatUIKit.loginWithAuthToken(userToken).then(user => {
-          //mount your app        
-        }).catch(console.log);
-      } else {
-        //mount your app
-      }
-    }).catch(console.log);
+    // CometChatUIKit.getLoggedinUser().then(user => {
+    //   if (!user) {
+    //     //Login user
+    //     let userToken = prompt('Enter user AuthToken')
+    //     CometChatUIKit.loginWithAuthToken(userToken).then(user => {
+    //       //mount your app        
+    //     }).catch(console.log);
+    //   } else {
+    //     //mount your app
+    //   }
+    // }).catch(console.log);
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(
       <App />

@@ -21,7 +21,7 @@ const PollOptionWraper = ({ message, sendVote, ele, myVote, pollData, pollResult
                     />
                 </div>
                 {
-                    pollResults[ele].count > 0 ? <div className="poll_voters_container">
+                    pollResults[ele].count > 0 ? <div className="poll_voters_container" key={pollResults[ele].text}>
                         <div className="voter_image_wraper">
                             {
                                 getVoterAvatars(pollResults, ele).map(({ avatar, name }) => <span>

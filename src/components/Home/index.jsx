@@ -1,6 +1,7 @@
 import { useState } from "react"
 import GroupsList from "../GroupsList/index";
 import liveChatIcon from '../../assets/images/liveChatIcon.png'
+import { CometChat } from "@cometchat/chat-sdk-javascript";
 import './style.css'
 
 export default function Home() {
@@ -9,10 +10,23 @@ export default function Home() {
 
     // close group list
     const closeChat = () => {
-        setShowChat(false)
+        CometChat.leaveGroup("supergroup").then(res => {
+            setShowChat(false)
+        }).catch(err => {
+            setShowChat(false)
+        })
     }
 
-    // props to send to group list component
+    const startLiveChat = () => {
+        // join supergroup
+        CometChat.joinGroup("supergroup", "public").then((res) => {
+            setShowChat(true)
+        }).catch(err => {
+            setShowChat(true)
+        })
+    }
+
+    // props to send to group list componentLive Chat
     const props = {
         closeChat
     }
@@ -33,7 +47,7 @@ export default function Home() {
                     {/* iframe to show live streamings */}
                     <iframe src="https://www.youtube.com/embed/67qlB5y5wCQ" title="tom" allowFullScreen={true} className="iframe_container_iframe"></iframe>
                     <div className="show_live_chat_button_wrapper">
-                        <button onClick={() => setShowChat(true)} className="home_container_livechat_button">
+                        <button onClick={startLiveChat} className="home_container_livechat_button">
                             <img src={liveChatIcon} alt="" className="live_chat_icon" />
                             Live Chat
                         </button>

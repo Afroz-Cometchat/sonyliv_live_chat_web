@@ -56,7 +56,7 @@ const ExtensionPollBubble = ({ message, updateGrouPollResults }) => {
             <div className="poll_bubble_container">
                 <div className="poll_of_the_week"> <span>Poll of the Week</span> </div>
             </div>
-            <div className="poll_question"><span>{pollData.question}</span></div>
+            <div key={pollData.question}><span>{pollData.question}</span></div>
             <div className="poll_options_container">
                 {
                     pollOptions.map(ele => <PollOptionWraper

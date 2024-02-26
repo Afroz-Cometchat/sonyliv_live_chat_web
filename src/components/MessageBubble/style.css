@@ -49,6 +49,10 @@
     border-radius: 50%;
 }
 
+.user_avatar_container{
+    padding-right: 4px;
+}
+
 .bubbleBottomView{
     display: flex;
     justify-content: space-between;
@@ -62,6 +66,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.bubbleActionsContainer > span{
+    padding: 0 5px;
 }
 
 .addReaction{

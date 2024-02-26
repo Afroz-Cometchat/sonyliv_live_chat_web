@@ -3,7 +3,7 @@ import sonylivadd from '../../../assets/images/sonylivadd.png'
 
 const ListItemView = ({ group, joinGroupHandler }) => {
     return (
-        <>
+        <div key={group.guid}>
             {/* generating random width for each group list item, can be changed */}
             <div className="groupListItem" style={{
                 width: `${Math.floor(Math.random() * 21) + 60}%`
@@ -43,7 +43,7 @@ const ListItemView = ({ group, joinGroupHandler }) => {
                 // render adds, randomly inside groups list, can be changed 
                 (Math.floor(Math.random() * 10) + 1) % 2 === 0 ? <img src={sonylivadd} alt="sonyliv add" className='addvertisement' id="addvertisement" /> : null
             }
-        </>
+        </div>
     )
 }
 

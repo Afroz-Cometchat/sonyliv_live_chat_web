@@ -141,7 +141,7 @@ export const CometChatLiveReactionView = ({ joinedGroup }) => {
                         <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(crying_face, "crying_face")}>&#128546;</span>
                         <span className="live_reaction_emoji" onClick={() => sendOtherLiveReaction(fire_emoji, "fire_emoji")}>&#128293;</span>
                     </div>}
-                    <span className='live_reaction_emoji'>
+                    <span className='live_reaction_emoji heart_reaction_emoji'>
                         <img
                             src={solylivhearticon}
                             alt=""

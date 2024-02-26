@@ -62,21 +62,20 @@ function MessageBubble({ message, group, setParentMessageIdHandler }) {
     return (
         <div className="message_bubble_main_container" key={message.id}>
             {/* user avatar */}
-            <div className="group_avatar_container">
+            <div className="user_avatar_container">
                 <AvatarView image={message.sender.avatar}
                     name={message.sender.name}
                     avatarStyle={JSON.stringify({
                         borderRadius: "50%",
                         width: "30px",
                         height: "30px",
-                        border: "1px solid rgb(238 238 238)",
+                        border: "none",
                         backgroundColor: "lightgrey",
                         nameTextColor: "rgb(20,20,20)",
                         backgroundSize: "cover",
                         nameTextFont: "500 16px Inter",
                         outerViewBorderWidth: "0",
                         outerViewBorderColor: "transparent",
-                        border: "none",
                     })}
                 />
             </div>

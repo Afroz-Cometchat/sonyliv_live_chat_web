@@ -52,7 +52,7 @@ const MessageBubbleReactionsView = ({ message, setIsLiked, setIsMyReaction }) =>
             {
                 // map over reactsions (emojies) to render
                 reactionsCount > 0 ?
-                    <div className='reactionEmojiContainer'>
+                    <div className='reactionEmojiContainer' key={message.id}>
                         <div className='reactionsEmojis'>
                             {reactionsData.map((ele) => {
                                 if (ele !== '🛵') {
